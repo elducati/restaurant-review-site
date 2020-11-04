@@ -13,22 +13,22 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
+const libraries = ["places"]
+const mapContainerStyle = {
+  width: "100vw",
+  height: "100vh",
+}
+const center = {
+  lat: -1.285790,
+  lng: 36.820030,
+}
+const options = {
+  styles: mapStyles,
+  disableDefaultUi: true,
+  zoomControl: true,
+}
 
 function App() {
-  const libraries = ["places"]
-  const mapContainerStyle = {
-    width: "100vw",
-    height: "100vh",
-  }
-  const center = {
-    lat: -1.285790,
-    lng: 36.820030,
-  }
-  const options = {
-    styles: mapStyles,
-    disableDefaultUi: true,
-    zoomControl: true,
-  }
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -44,23 +44,30 @@ function App() {
       },
       ])
   }, [])
-  const panTo = useCallback(({ lat, lng }) => {
-    mapRef.current.panTo({ lat, lng })
-    mapRef.current.setZoom(14)
-  }, [])
   const mapRef = useRef()
   const onMapLoad = useCallback((map) => {
     mapRef.current = map
   }, [])
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng })
+    mapRef.current.setZoom(14)
+  }, [])
+  
   if (loadError) return "Error loading maps"
   if (!isLoaded) return "Loading Maps"
   return (
     <div>
-      <h1>Map</h1>
+      <h1>
+        Restaurants{" "}
+        <span role="img" aria-label="restaurant">
+          
+        </span>        
+      </h1>
 
       <Search panTo={panTo} />
       <Locate panTo={panTo} />
       <GoogleMap
+      id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={8}
         center={center}
@@ -70,7 +77,7 @@ function App() {
       >
         {markers.map((marker) => (
           <Marker
-            key={marker.time.toISOString()}
+          key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
             onClick={() => {
               setSelected(marker)
@@ -85,7 +92,7 @@ function App() {
             }}
           >
             <div>
-              <h2>Bear spotted</h2>
+              <h2>Restaurant Spotted</h2>
               <p>spotted {formatRelative(selected.time, new Date())}</p>
             </div>
           </InfoWindow>
@@ -110,7 +117,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="/logo.svg" alt="compass" />
+      {/* <img src="/logo.svg" alt="compass" /> */}
     </button>
   );
 }
@@ -124,41 +131,43 @@ function Search(panTo) {
         lat: () => -1.285790,
         lng: () => 36.820030
       },
-      radius: 200 * 1000,
+      radius: 100 * 1000,
     }
   })
+  const handleInput = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handleSelect = async (address) => {
+    setValue(address, false);
+    clearSuggestions();
+
+    try {
+      const results = await getGeocode({ address });
+      const { lat, lng } = await getLatLng(results[0]);
+      panTo({ lat, lng });
+    } catch (error) {
+      console.log("😱 Error: ", error);
+    }
+  };
   return (
     <div className="search">
-      <Combobox 
-      onSelect={async (address) => {
-        setValue(address, false)
-        clearSuggestions()
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          placeholder="Search your location"
+        />
 
-        try {
-          const results = await getGeocode({ address });
-          const { lat, lng } = await getLatLng(results[0]);
-          panTo({ lat, lng });
-        } catch (error) {
-          console.log("😱 Error: ", error);
-        }
-      }
-    }
-  >
-    <ComboboxInput 
-    value={value} onChange={(e)=>{
-      setValue(e.target.value)
-    }}
-    disabled={!ready}
-    placeholder="Enter an address"
-    />
-    <ComboboxPopover>
-      <ComboboxList>
-      {status === "OK" && data.map(({id, description}) => (
-        <ComboboxOption key={id} value={description} />
-      ))}
-      </ComboboxList>
-    </ComboboxPopover>
-  </Combobox>
+        <ComboboxPopover>
+          <ComboboxList>
+            {status === "OK" && data.map(({ id, description }) => (
+              <ComboboxOption key={id} value={description} />
+            ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
     </div>
   )
 }
