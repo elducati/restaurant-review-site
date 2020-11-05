@@ -1,4 +1,5 @@
 import React from "react";
+import compass from "./compass.svg"
 import {
   GoogleMap,
   useLoadScript,
@@ -144,7 +145,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="src/compass.svg" alt="compass" />
+      <img src={compass} alt="compass" />
     </button>
   );
 }
