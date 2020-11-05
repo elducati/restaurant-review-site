@@ -1,5 +1,6 @@
 import React from "react";
 import compass from "./compass.svg"
+import restaurant from "./restaurant.svg"
 import {
   GoogleMap,
   useLoadScript,
@@ -98,7 +99,7 @@ export default function App() {
               setSelected(marker);
             }}
             icon={{
-              url: `/bear.svg`,
+              url: restaurant,
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
