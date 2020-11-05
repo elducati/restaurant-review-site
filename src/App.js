@@ -24,7 +24,7 @@ import mapStyles from "./mapStyles";
 const libraries = ["places"];
 const mapContainerStyle = {
   height: "100vh",
-  width: "100vw",
+  width: "75vw",
 };
 const options = {
   styles: mapStyles,
