@@ -26,7 +26,7 @@ const options = {
   zoomControl: true,
 };
 const center = {
-  lat:  -1.285790,
+  lat: -1.285790,
   lng: 36.820030,
 };
 
@@ -67,7 +67,7 @@ export default function App() {
       <h1>
         Restaurants{" "}
         <span role="img" aria-label="tent">
-          ⛺️ 
+          ⛺️
         </span>
       </h1>
 
@@ -118,7 +118,7 @@ export default function App() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
-      
+
     </div>
   );
 }
