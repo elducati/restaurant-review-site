@@ -75,7 +75,7 @@ export default function App() {
       <h1>
         Restaurants{" "}
         <span role="img" aria-label="tent">
-          ⛺️
+          ⛺️ 
         </span>
       </h1>
 
@@ -126,6 +126,7 @@ export default function App() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
+      
     </div>
   );
 }
@@ -166,7 +167,7 @@ function Search({ panTo }) {
   });
 
   // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
-
+  // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lati},${lonn}&radius=1500&type=restaurant&key=AIzaSyAlELmqkRobpn26ReMLLTirp7GHsaW8vy0`
   const handleInput = (e) => {
     setValue(e.target.value);
   };
@@ -202,6 +203,7 @@ function Search({ panTo }) {
           </ComboboxList>
         </ComboboxPopover>
       </Combobox>
+      
     </div>
   );
 }
