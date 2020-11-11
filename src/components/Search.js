@@ -11,7 +11,7 @@ import {
     getLatLng,
   } from "use-places-autocomplete";
 
-export default function Search({ panTo }) {
+const Search = ({ panTo }) =>  {
     const {
       ready,
       value,
@@ -65,4 +65,4 @@ export default function Search({ panTo }) {
       </div>
     );
   }
-  
+  export default Search

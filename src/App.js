@@ -30,7 +30,7 @@ const center = {
   lng: 36.820030,
 };
 
-export default function App() {
+const App = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -122,5 +122,5 @@ export default function App() {
     </div>
   );
 }
-
+export default App
 

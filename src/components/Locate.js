@@ -1,7 +1,7 @@
 import React from "react"
 import compass from "../compass.svg"
 
-export default function Locate({ panTo }) {
+const Locate = ({ panTo }) => {
     return (
       <button
         className="locate"
@@ -21,4 +21,4 @@ export default function Locate({ panTo }) {
       </button>
     );
   }
- 
+export default Locate
