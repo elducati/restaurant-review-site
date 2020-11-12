@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Locate from "./components/Locate";
 import Search from "./components/Search"
 import restaurant from "./restaurant.svg"
+import Axios from "axios"
 import {
   GoogleMap,
   useLoadScript,
@@ -29,14 +30,21 @@ const center = {
   lat: -1.285790,
   lng: 36.820030,
 };
+const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 const App = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+  //state for the markers
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+
+  //State for the set lng and lat when getting location
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+  
 
   const onMapClick = React.useCallback((e) => {
     setMarkers((current) => [
@@ -48,7 +56,18 @@ const App = () => {
       },
     ]);
   }, []);
-
+  const [restaurants, setRestaurants] = useState([])
+   useEffect(() => {
+    console.log('effect')
+    
+    Axios
+      .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${googleMapsApiKey}`)
+      .then(response => {
+        let restaurants = response.data.results
+        console.log(restaurants)
+        setRestaurants(restaurants)
+      })
+  }, [latitude, longitude])
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
