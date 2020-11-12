@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Locate from "./components/Locate";
 import Search from "./components/Search"
 import restaurant from "./restaurant.svg"
@@ -14,6 +14,7 @@ import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
+import Axios from "axios";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -29,15 +30,18 @@ const center = {
   lat: -1.285790,
   lng: 36.820030,
 };
-
+const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 const App = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+  // markers state
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
-
+  //latitude and longitude states
+  const [latitude, setLatitude] = useState(0)
+  const [longitude, setLogitude] = useState(0)
   const onMapClick = React.useCallback((e) => {
     setMarkers((current) => [
       ...current,
@@ -48,7 +52,20 @@ const App = () => {
       },
     ]);
   }, []);
-
+  //restaurants state
+  const [restaurants, setRestaurants ] = useState([])
+   
+   useEffect(() => {
+    console.log('effect')
+    
+    Axios
+      .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${googleMapsApiKey}`)
+      .then(response => {
+        let restaurants = response.data.results
+        console.log(restaurants)
+        setRestaurants(restaurants)
+      })
+  }, [latitude, longitude])
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
@@ -87,7 +104,7 @@ const App = () => {
           <Marker
             key={`${marker.lat}-${marker.lng}`}
             position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
+            onLoad={() => {
               setSelected(marker);
             }}
             icon={{
