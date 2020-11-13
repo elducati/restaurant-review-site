@@ -33,8 +33,8 @@ const options = {
   zoomControl: true,
 };
 const center = {
-  lat: 43.6532,
-  lng: -79.3832,
+  lat: 48.8737815,
+  lng: 2.3501649,
 };
 
 export default function App() {
@@ -60,14 +60,54 @@ export default function App() {
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
   }, []);
-
+  // current position callback hook
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
   }, []);
-
+  //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
+
+  const locations = [
+    {
+      "restaurantName": "Bronco",
+      "address": "39 Rue des Petites Écuries, 75010 Paris",
+      "location": {
+        "lat": 48.8737815,
+        "lng": 2.3501649
+      },
+      "ratings": [
+        {
+          "stars": 4,
+          "comment": "Great! But not many veggie options."
+        },
+        {
+          "stars": 5,
+          "comment": "My favorite restaurant!"
+        }
+      ]
+    },
+    {
+      "restaurantName": "Babalou",
+      "address": "4 Rue Lamarck, 75018 Paris",
+      "location":
+      {
+        "lat": 48.8865035,
+        "lng": 2.3442197
+      },
+      "ratings": [
+        {
+          "stars": 5,
+          "comment": "Tiny pizzeria next to Sacre Coeur!"
+        },
+        {
+          "stars": 3,
+          "comment": "Meh, it was fine."
+        }
+      ]
+    }
+  ]
 
   return (
     <div>
@@ -90,15 +130,13 @@ export default function App() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {markers.map((marker) => (
+        {locations.map((item) => (
           <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
+            key={item.restaurantName}
+            position={item.location}
+
             icon={{
-              url: `/bear.svg`,
+              url: compass,
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
