@@ -20,11 +20,12 @@ import { formatRelative } from "date-fns";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
+import compass from "./compass.svg"
 
 const libraries = ["places"];
 const mapContainerStyle = {
   height: "100vh",
-  width: "100vw",
+  width: "85vw",
 };
 const options = {
   styles: mapStyles,
@@ -71,7 +72,7 @@ export default function App() {
   return (
     <div>
       <h1>
-        Bears{" "}
+        Restaurant{" "}
         <span role="img" aria-label="tent">
           ⛺️
         </span>
@@ -114,8 +115,8 @@ export default function App() {
           >
             <div>
               <h2>
-                <span role="img" aria-label="bear">
-                  🐻
+                <span role="img" aria-label="restaurant">
+                  restaurant
                 </span>{" "}
                 Alert
               </h2>
@@ -139,12 +140,13 @@ function Locate({ panTo }) {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             });
+            console.log(position.coords.latitude, position.coords.longitude)
           },
           () => null
         );
       }}
     >
-      <img src="/compass.svg" alt="compass" />
+      <img src={compass} alt="compass" />
     </button>
   );
 }
