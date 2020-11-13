@@ -33,8 +33,8 @@ const options = {
   zoomControl: true,
 };
 const center = {
-  lat: 48.8737815,
-  lng: 2.3501649,
+  lat: 41.3851,
+  lng: 2.1734,
 };
 
 export default function App() {
@@ -69,46 +69,46 @@ export default function App() {
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
  //location object for restaurants
-  const locations = [
-    {
-      "restaurantName": "Bronco",
-      "address": "39 Rue des Petites Écuries, 75010 Paris",
-      "location": {
-        "lat": 48.8737815,
-        "lng": 2.3501649
-      },
-      "ratings": [
-        {
-          "stars": 4,
-          "comment": "Great! But not many veggie options."
-        },
-        {
-          "stars": 5,
-          "comment": "My favorite restaurant!"
-        }
-      ]
+ const locations = [
+  {
+    name: "Location 1",
+    location: { 
+      lat: 41.3954,
+      lng: 2.162 
     },
-    {
-      "restaurantName": "Babalou",
-      "address": "4 Rue Lamarck, 75018 Paris",
-      "location":
-      {
-        "lat": 48.8865035,
-        "lng": 2.3442197
-      },
-      "ratings": [
-        {
-          "stars": 5,
-          "comment": "Tiny pizzeria next to Sacre Coeur!"
-        },
-        {
-          "stars": 3,
-          "comment": "Meh, it was fine."
-        }
-      ]
-    }
-  ]
-
+  },
+  {
+    name: "Location 2",
+    location: { 
+      lat: 41.3917,
+      lng: 2.1649
+    },
+  },
+  {
+    name: "Location 3",
+    location: { 
+      lat: 41.3773,
+      lng: 2.1585
+    },
+  },
+  {
+    name: "Location 4",
+    location: { 
+      lat: 41.3797,
+      lng: 2.1682
+    },
+  },
+  {
+    name: "Location 5",
+    location: { 
+      lat: 41.4055,
+      lng: 2.1915
+    },
+  }
+];
+  const onSelect = item => {
+    setSelected(item);
+  }
   return (
     <div>
       <h1>
@@ -132,9 +132,9 @@ export default function App() {
       >
         {locations.map((item) => (
           <Marker
-            key={item.restaurantName}
+            key={item.name}
             position={item.location}
-
+            onClick={()=>onSelect(item)}
             icon={{
               url: compass,
               origin: new window.google.maps.Point(0, 0),
@@ -143,10 +143,11 @@ export default function App() {
             }}
           />
         ))}
-
+{/* //display restaurant information marker */}
         {selected ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={selected.location}
+            clickable ={true}
             onCloseClick={() => {
               setSelected(null);
             }}
@@ -154,19 +155,20 @@ export default function App() {
             <div>
               <h2>
                 <span role="img" aria-label="restaurant">
-                  restaurant
-                </span>{" "}
-                Alert
+                {selected.name}                  
+                </span>{""}
+                <p>restaurant</p>
               </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
+              
+              
             </div>
           </InfoWindow>
-        ) : null}
+        ):null }
       </GoogleMap>
     </div>
   );
 }
-
+//display current position
 function Locate({ panTo }) {
   return (
     <button
@@ -179,16 +181,18 @@ function Locate({ panTo }) {
               lng: position.coords.longitude,
             });
             console.log(position.coords.latitude, position.coords.longitude)
+            
           },
           () => null
         );
       }}
     >
+      <Marker panTo={panTo}/>
       <img src={compass} alt="compass" />
     </button>
   );
 }
-
+//search a place using the autocomplete functionality
 function Search({ panTo }) {
   const {
     ready,
