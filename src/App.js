@@ -35,14 +35,21 @@ const center = {
   lat: 43.6532,
   lng: -79.3832,
 };
+const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
 export default function App() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+  //state for the markers
   const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
+
+  //State for the set lng and lat when getting location
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+  
 
   const onMapClick = React.useCallback((e) => {
     setMarkers((current) => [
@@ -54,7 +61,18 @@ export default function App() {
       },
     ]);
   }, []);
-
+  const [restaurants, setRestaurants] = useState([])
+   useEffect(() => {
+    console.log('effect')
+    
+    Axios
+      .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=1500&type=restaurant&key=${googleMapsApiKey}`)
+      .then(response => {
+        let restaurants = response.data.results
+        console.log(restaurants)
+        setRestaurants(restaurants)
+      })
+  }, [latitude, longitude])
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
