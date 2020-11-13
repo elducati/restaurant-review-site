@@ -68,7 +68,7 @@ export default function App() {
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
-
+ //location object for restaurants
   const locations = [
     {
       "restaurantName": "Bronco",
