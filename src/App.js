@@ -16,11 +16,12 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import { formatRelative } from "date-fns";
+
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 import compass from "./compass.svg"
+import RestLocation from "./components/RestLocation"
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -33,8 +34,8 @@ const options = {
   zoomControl: true,
 };
 const center = {
-  lat: 41.3851,
-  lng: 2.1734,
+  lat: -1.2746752,
+  lng: 36.8214016,
 };
 
 export default function App() {
@@ -68,47 +69,7 @@ export default function App() {
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
- //location object for restaurants
- const locations = [
-  {
-    name: "Location 1",
-    location: { 
-      lat: 41.3954,
-      lng: 2.162 
-    },
-  },
-  {
-    name: "Location 2",
-    location: { 
-      lat: 41.3917,
-      lng: 2.1649
-    },
-  },
-  {
-    name: "Location 3",
-    location: { 
-      lat: 41.3773,
-      lng: 2.1585
-    },
-  },
-  {
-    name: "Location 4",
-    location: { 
-      lat: 41.3797,
-      lng: 2.1682
-    },
-  },
-  {
-    name: "Location 5",
-    location: { 
-      lat: 41.4055,
-      lng: 2.1915
-    },
-  }
-];
-  const onSelect = item => {
-    setSelected(item);
-  }
+  
   return (
     <div>
       <h1>
@@ -120,29 +81,18 @@ export default function App() {
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
+      <RestLocation />
 
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
-        zoom={8}
+        zoom={15}
         center={center}
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {locations.map((item) => (
-          <Marker
-            key={item.name}
-            position={item.location}
-            onClick={()=>onSelect(item)}
-            icon={{
-              url: compass,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
+        <RestLocation />
 {/* //display restaurant information marker */}
         {selected ? (
           <InfoWindow
@@ -207,7 +157,7 @@ function Search({ panTo }) {
     },
   });
 
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+  
 
   const handleInput = (e) => {
     setValue(e.target.value);
