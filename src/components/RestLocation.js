@@ -2,10 +2,14 @@ import Axios from "axios"
 import React from "react"
 import { Marker, InfoWindow } from "@react-google-maps/api"
 import compass from "../compass.svg"
+
 const RestLocation = () => {
+    //google maps api keys
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
     const [responseData, setResponseData] = React.useState([])
     const [selected, setSelected] = React.useState(null)
+    
+
     const onSelect = item => {
         setSelected(item);
     }
@@ -17,8 +21,7 @@ const RestLocation = () => {
             })
 
     }, [googleMapsApiKey])
-
-
+//show nearby restaurants using Markers
     return (
         <div>
             {responseData.map((item) => (
