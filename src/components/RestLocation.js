@@ -2,10 +2,13 @@ import Axios from "axios"
 import React from "react"
 import { Marker, InfoWindow } from "@react-google-maps/api"
 import compass from "../compass.svg"
+import { LocationContext } from "../context/locationContext"
 
 const RestLocation = () => {
     //google maps api keys
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+
+    const [location] = React.useContext(LocationContext)
     const [responseData, setResponseData] = React.useState([])
     const [selected, setSelected] = React.useState(null)
     

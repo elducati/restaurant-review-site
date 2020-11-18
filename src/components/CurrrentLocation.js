@@ -1,8 +1,10 @@
+import { Marker } from "@react-google-maps/api";
 import React from "react"
 import compass from "../compass.svg"
 //zoom to current position
 const Locate = ({ panTo }) => {
     return (
+      <div>
       <button
         className="locate"
         onClick={() => {
@@ -22,6 +24,8 @@ const Locate = ({ panTo }) => {
         
         <img src={compass} alt="compass" />
       </button>
+         
+      </div>
     );
   }
 export default Locate  
