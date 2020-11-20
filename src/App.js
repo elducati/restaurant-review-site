@@ -10,6 +10,7 @@ import mapStyles from "./mapStyles";
 import Search from "./components/Search"
 import RestLocation from "./components/RestLocation"
 import Locate from "./components/CurrrentLocation"
+import LocationView from "./view/locationView";
 
 const libraries = ["places"];
 //map's visible container layout size
@@ -36,16 +37,18 @@ export default function App() {
     libraries,
   });
 
-  // const onMapClick = React.useCallback((e) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: e.latLng.lat(),
-  //       lng: e.latLng.lng(),
-  //       time: new Date(),
-  //     },
-  //   ]);
-  // }, []);
+  const [markers, setMarkers] = React.useState([])
+
+  const onMapClick = React.useCallback((e) => {
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: new Date(),
+      },
+    ]);
+  }, []);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -71,17 +74,17 @@ export default function App() {
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
-      <RestLocation />
+      <LocationView />
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={15}
         center={center}
         options={options}
-        // onClick={onMapClick}
+        onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <RestLocation />
+        <RestLocation panTo={panTo}/>
       </GoogleMap>
     </div>
   );

@@ -4,11 +4,12 @@ import { Marker, InfoWindow } from "@react-google-maps/api"
 import compass from "../compass.svg"
 import { LocationContext } from "../context/locationContext"
 
-const RestLocation = () => {
+const RestLocation = ({panTo}) => {
     //google maps api keys
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
-    const [location] = React.useContext(LocationContext)
+    const location = React.useContext(LocationContext)
+    console.log(location)
     const [responseData, setResponseData] = React.useState([])
     const [selected, setSelected] = React.useState(null)
     
@@ -18,12 +19,12 @@ const RestLocation = () => {
     }
     React.useEffect(() => {
         Axios
-            .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-1.292066,36.821945&radius=1500&type=restaurant&key=${googleMapsApiKey}`)
+            .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=500&type=restaurant&key=${googleMapsApiKey}`)
             .then((response) => {
                 setResponseData(response.data.results)
             })
 
-    }, [googleMapsApiKey])
+    }, [googleMapsApiKey, location])
 //show nearby restaurants using Markers
     return (
         <div>
