@@ -5,14 +5,14 @@ export const LocationContext = createContext();
 
 // Create a provider for components to consume and subscribe to changes
 export const LocationContextProvider = props => {
-  const [location, setLocation] = useState([ 0, 0 ]);
+  const [location, setLocation] = useState({lat:0, lng: 0});
   navigator.geolocation.getCurrentPosition(
     (position) => {
       setLocation({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
-      console.log(position.coords.latitude, position.coords.longitude)
+      //console.log(position.coords.latitude, position.coords.longitude)
 
     },
     () => null

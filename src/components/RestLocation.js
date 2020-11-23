@@ -9,7 +9,8 @@ const RestLocation = ({panTo}) => {
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
     const location = React.useContext(LocationContext)
-    console.log(location)
+    const latitude = location[0].lat
+    const longitude = location[0].lng
     const [responseData, setResponseData] = React.useState([])
     const [selected, setSelected] = React.useState(null)
     
@@ -17,14 +18,14 @@ const RestLocation = ({panTo}) => {
     const onSelect = item => {
         setSelected(item);
     }
-    React.useEffect(() => {
+    React.useEffect(() => {        
         Axios
-            .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=500&type=restaurant&key=${googleMapsApiKey}`)
+            .get(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=500&type=restaurant&key=${googleMapsApiKey}`)
             .then((response) => {
                 setResponseData(response.data.results)
             })
 
-    }, [googleMapsApiKey, location])
+    }, [googleMapsApiKey, latitude, longitude])
 //show nearby restaurants using Markers
     return (
         <div>

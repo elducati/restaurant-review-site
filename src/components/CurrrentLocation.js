@@ -1,23 +1,14 @@
-import React from "react"
+import React, {useContext} from "react"
 import compass from "../compass.svg"
+import { LocationContext } from "../context/locationContext"
 //zoom to current position
-const Locate = ({ panTo }) => {
+
+const Locate = () => {
+  const panTo = useContext(LocationContext)
     return (
       <button
         className="locate"
-        onClick={() => {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              panTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-              console.log(position.coords.latitude, position.coords.longitude)
-              
-            },
-            () => null
-          );
-        }}
+        onClick={panTo}
       >
         
         <img src={compass} alt="compass" />

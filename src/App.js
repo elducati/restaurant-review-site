@@ -74,7 +74,7 @@ export default function App() {
 
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
-      <LocationView />
+      
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -84,7 +84,7 @@ export default function App() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <RestLocation panTo={panTo}/>
+        <LocationView />
       </GoogleMap>
     </div>
   );
