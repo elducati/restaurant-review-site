@@ -4,7 +4,7 @@ import { Marker, InfoWindow } from "@react-google-maps/api"
 import compass from "../compass.svg"
 import { LocationContext } from "../context/locationContext"
 
-const RestLocation = ({panTo}) => {
+const RestLocation = () => {
     //google maps api keys
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 

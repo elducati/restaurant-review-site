@@ -72,7 +72,7 @@ export default function App() {
         </span>
       </h1>
 
-      <Locate panTo={panTo} />
+      
       <Search panTo={panTo} />
       
       <GoogleMap
