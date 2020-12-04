@@ -2,10 +2,10 @@ import RestLocation from "../components/RestLocation"
 
 const { LocationContextProvider } = require("../context/locationContext")
 
-const LocationView = () => {
+const LocationView = ({panTo}) => {
     return (
         <LocationContextProvider>
-           <RestLocation />
+           <RestLocation panTo={panTo}/>
         </LocationContextProvider>
     )
 }

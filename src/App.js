@@ -36,19 +36,19 @@ export default function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-
+ 
   const [markers, setMarkers] = React.useState([])
 
-  const onMapClick = React.useCallback((e) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-  }, []);
+  // const onMapClick = React.useCallback((e) => {
+  //   setMarkers((current) => [
+  //     ...current,
+  //     {
+  //       lat: e.latLng.lat(),
+  //       lng: e.latLng.lng(),
+  //       time: new Date(),
+  //     },
+  //   ]);
+  // }, []);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -57,7 +57,7 @@ export default function App() {
   // current position callback hook
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
+    mapRef.current.setZoom(15);
   }, []);
   //load map
   if (loadError) return "Error";
@@ -81,10 +81,10 @@ export default function App() {
         zoom={15}
         center={center}
         options={options}
-        onClick={onMapClick}
+        // onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <LocationView />
+        <LocationView panTo={panTo}/>
       </GoogleMap>
     </div>
   );

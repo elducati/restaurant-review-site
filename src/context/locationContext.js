@@ -12,7 +12,7 @@ export const LocationContextProvider = props => {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
-      //console.log(position.coords.latitude, position.coords.longitude)
+      console.log(position.coords.latitude, position.coords.longitude)
 
     },
     () => null
