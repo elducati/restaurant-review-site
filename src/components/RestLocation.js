@@ -27,13 +27,13 @@ const RestLocation = ({panTo}) => {
                 setResponseData(response.data.results)
             })
             panTo({lat, lng})
-    }, [googleMapsApiKey, lat, lng])
+    }, [googleMapsApiKey, lat, lng, panTo])
 //show nearby restaurants using Markers
     return (
         <div>
             {responseData.map((item) => (
                 <Marker
-                    key={item.name}
+                    key={item.place_id}
                     position={item.geometry.location}
                     onClick={() => onSelect(item)}
                     icon={{
