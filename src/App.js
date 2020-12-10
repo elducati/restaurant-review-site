@@ -2,16 +2,15 @@
 import React from "react";
 import {
   GoogleMap,
-  useLoadScript,
+  useLoadScript, Marker,
 } from "@react-google-maps/api";
 
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 import Search from "./components/Search"
-import RestLocation from "./components/RestLocation"
-import Locate from "./components/CurrrentLocation"
 import LocationView from "./view/locationView";
 
+let service;
 const libraries = ["places"];
 //map's visible container layout size
 const mapContainerStyle = {
@@ -36,19 +35,19 @@ export default function App() {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
- 
+
   const [markers, setMarkers] = React.useState([])
 
-  // const onMapClick = React.useCallback((e) => {
-  //   setMarkers((current) => [
-  //     ...current,
-  //     {
-  //       lat: e.latLng.lat(),
-  //       lng: e.latLng.lng(),
-  //       time: new Date(),
-  //     },
-  //   ]);
-  // }, []);
+  const onMapClick = React.useCallback((e) => {
+    setMarkers((current) => [
+      ...current,
+      {
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: new Date(),
+      },
+    ]);
+  }, []);
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
@@ -58,11 +57,31 @@ export default function App() {
   const panTo = React.useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
+    let map = mapRef.current
+    let request = {
+      location: { lat, lng },
+      radius: "500",
+      type: ["restaurant"]
+    }
+
+    service = new window.google.maps.places.PlacesService(mapRef.current)
+    service.nearbySearch(request, callback)
+    const callback = (results, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++) {
+          let place = results[i]
+          new window.google.maps.Marker({
+            position: place.geometry.location,
+            map
+          })
+        }
+      }
+    }
   }, []);
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
-  
+
   return (
     <div>
       <h1>
@@ -72,19 +91,19 @@ export default function App() {
         </span>
       </h1>
 
-      
+
       <Search panTo={panTo} />
-      
+
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={15}
         center={center}
         options={options}
-        // onClick={onMapClick}
+        onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <LocationView panTo={panTo}/>
+        <LocationView panTo={panTo} />
       </GoogleMap>
     </div>
   );
