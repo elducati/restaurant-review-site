@@ -65,8 +65,9 @@ export default function App() {
     }
 
     service = new window.google.maps.places.PlacesService(mapRef.current)
+    // eslint-disable-next-line no-use-before-define
     service.nearbySearch(request, callback)
-    const callback = (results, status) => {
+    function callback(results, status){
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
           let place = results[i]
