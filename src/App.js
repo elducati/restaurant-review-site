@@ -1,14 +1,15 @@
 //import depencies
-import React from "react";
+import React,{useState, useCallback, useRef} from "react";
 import {
   GoogleMap,
-  useLoadScript, Marker,
+  useLoadScript, Marker, InfoWindow
 } from "@react-google-maps/api";
-
+import compass from "./compass.svg"
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
 import Search from "./components/Search"
 import LocationView from "./view/locationView";
+import AppBar from "./components/AppBar";
 
 let service;
 const libraries = ["places"];
@@ -36,9 +37,9 @@ export default function App() {
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([])
-
-  const onMapClick = React.useCallback((e) => {
+  const [markers, setMarkers] = useState([])
+  const [selected, setSelected] = useState(null)
+  const onMapClick = useCallback((e) => {
     setMarkers((current) => [
       ...current,
       {
@@ -49,12 +50,12 @@ export default function App() {
     ]);
   }, []);
 
-  const mapRef = React.useRef();
-  const onMapLoad = React.useCallback((map) => {
+  const mapRef = useRef();
+  const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
   // current position callback hook
-  const panTo = React.useCallback(({ lat, lng }) => {
+  const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
     let map = mapRef.current
@@ -73,7 +74,11 @@ export default function App() {
           let place = results[i]
           new window.google.maps.Marker({
             position: place.geometry.location,
-            map
+            map:map,
+            title:place.name,
+            icon:{url:compass,origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+              scaledSize: new window.google.maps.Size(30, 30),}
           })
         }
       }
@@ -85,16 +90,8 @@ export default function App() {
 
   return (
     <div>
-      <h1>
-        Restaurant{" "}
-        <span role="img" aria-label="tent">
-          ⛺️
-        </span>
-      </h1>
-
-
+      <AppBar />
       <Search panTo={panTo} />
-
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -103,7 +100,7 @@ export default function App() {
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
-      >
+      >        
         <LocationView panTo={panTo} />
       </GoogleMap>
     </div>

@@ -1,6 +1,6 @@
 import Axios from "axios"
 import React from "react"
-import { Marker, InfoWindow } from "@react-google-maps/api"
+import { Marker } from "@react-google-maps/api"
 import compass from "../compass.svg"
 import { LocationContext } from "../context/locationContext"
 
@@ -14,7 +14,7 @@ const RestLocation = ({panTo}) => {
     const lng = location[0].lng
     console.log(lat);    
     const [responseData, setResponseData] = React.useState([])
-    const [selected, setSelected] = React.useState(null)
+    const [, setSelected] = React.useState(null)
     
 
     const onSelect = item => {
@@ -42,28 +42,9 @@ const RestLocation = ({panTo}) => {
                         anchor: new window.google.maps.Point(15, 15),
                         scaledSize: new window.google.maps.Size(30, 30),
                     }}
-
                 />
-
             ))}
-            {/* display restaurant information on a marker */}
-            {selected ? (
-                <InfoWindow
-                    position={selected.geometry.location}
-                    clickable={true}
-                    onCloseClick={() => {
-                        setSelected(null);
-                    }}
-                >
-                    <div>
-                        <h2>
-                            <span role="img" aria-label="restaurant">
-                                {selected.name}
-                            </span>                            
-                        </h2>
-                    </div>
-                </InfoWindow>
-            ) : null}
+            
 
         </div>
     )
