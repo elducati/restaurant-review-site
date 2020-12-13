@@ -9,10 +9,10 @@ const RestLocation = ({panTo}) => {
     const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
     const location = React.useContext(LocationContext)
-    console.log(location);    
+    //console.log(location);    
     const lat = location[0].lat
     const lng = location[0].lng
-    console.log(lat);    
+    //console.log(lat);    
     const [responseData, setResponseData] = React.useState([])
     const [, setSelected] = React.useState(null)
     
@@ -43,8 +43,7 @@ const RestLocation = ({panTo}) => {
                         scaledSize: new window.google.maps.Size(30, 30),
                     }}
                 />
-            ))}
-            
+            ))}            
 
         </div>
     )

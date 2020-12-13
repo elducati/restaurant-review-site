@@ -1,10 +1,20 @@
 import React from "react"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import Typography from "@material-ui/core/Typography"
 
-const AppBar = () => {
+const NavBar = () => {
     return(
         <div>
-            <h1>Restaurants</h1>
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography color="inherit">
+                        Restaurants Review
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            
         </div>
     )
 }
-export default AppBar
+export default NavBar
