@@ -106,9 +106,9 @@ export default function App() {
         <Grid container item xs={6}>
           <Grid>
             {places && places.map((place) => {
-              return <li key={place.place_id}>
+              return <p key={place.place_id}>
                 {place.name}
-              </li>
+              </p>
             })}
           </Grid>
         </Grid>
