@@ -102,9 +102,9 @@ export default function App() {
     <div>
       <NavBar />
       <Search panTo={panTo} />
-      <Grid container>
-        <Grid container item xs={6}>
-          <Grid>
+      <Grid container >
+        <Grid container item xs={6} >
+          <Grid padding={5}> 
             {places && places.map((place) => {
               return <p key={place.place_id}>
                 {place.name}
@@ -112,7 +112,7 @@ export default function App() {
             })}
           </Grid>
         </Grid>
-        <Grid container item xs={6}>
+        <Grid container item xs={6} >
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
