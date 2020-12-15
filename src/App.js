@@ -11,6 +11,8 @@ import Search from "./components/Search"
 import LocationView from "./view/locationView";
 import NavBar from "./components/AppBar";
 import Grid from "@material-ui/core/Grid"
+import { Paper } from "@material-ui/core";
+
 
 let service;
 const libraries = ["places"];
@@ -86,6 +88,7 @@ export default function App() {
               scaledSize: new window.google.maps.Size(30, 30),
             }
           })
+          
           setResponseData(places)
         }
       }
@@ -102,17 +105,19 @@ export default function App() {
     <div>
       <NavBar />
       <Search panTo={panTo} />
-      <Grid container >
-        <Grid container item xs={6} >
+      <Grid container style={{padding:20}}>
+        <Grid container item xs={4}>
           <Grid padding={5}> 
+          <Paper elevation={3} style={{padding:10}}>
             {places && places.map((place) => {
               return <p key={place.place_id}>
                 {place.name}
               </p>
             })}
+            </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={6} >
+        <Grid container item xs={8} >
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
