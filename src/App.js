@@ -70,33 +70,58 @@ export default function App() {
     }
 
     service = new window.google.maps.places.PlacesService(mapRef.current)
-    // eslint-disable-next-line no-use-before-define
+    
     service.nearbySearch(request, callback)
+    // Handle the results (up to 20) of the Nearby Search
     function callback(results, status) {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-
-          let place = results[i]
-          const places = results
-          new window.google.maps.Marker({
-            position: place.geometry.location,
-            map: map,
-            title: place.name,
-            icon: {
-              url: compass, origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }
-          })
-          
-          setResponseData(places)
-        }
+        createMarkers(results);
+        setResponseData(results)
       }
     }
+    // Set markers at the location of each place result
+    function createMarkers(places) {
+      places.forEach(place => {
+        let marker = new window.google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name
+        });
+        // Add click listener to each marker
+        window.google.maps.event.addListener(marker, 'click', () => {
+          let request = {
+            placeId: place.place_id,
+            fields: ['name', 'formatted_address', 'geometry', 'rating',
+              'website', 'photos']
+          };
 
+          /* Only fetch the details of a place when the user clicks on a marker.
+           * If we fetch the details for all place results as soon as we get
+           * the search response, we will hit API rate limits. */
+          service.getDetails(request, (placeResult, status) => {
+            showDetails(placeResult, marker, status)
+          });
+        });        
+      });
+     
+    }
+    // Builds an InfoWindow to display details above the marker
+    function showDetails(placeResult, marker, status) {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        let placeInfowindow = new window.google.maps.InfoWindow();
+        let rating = "None";
+        if (placeResult.rating) rating = placeResult.rating;
+        placeInfowindow.setContent(`'<div><strong>' + ${placeResult.name} +
+          '</strong><br>' 'Rating: '  ${rating} '</div>'`);
+        placeInfowindow.open(marker.map, marker);
+        
+      } else {
+        console.log('showDetails failed: ' + status);
+      }
+    }
   }, []);
 
-  const places = Array.from(responseData)
+  const locations = Array.from(responseData)
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -109,7 +134,7 @@ export default function App() {
         <Grid container item xs={4}>
           <Grid padding={5}> 
           <Paper elevation={3} style={{padding:10}}>
-            {places && places.map((place) => {
+            {locations && locations.map((place) => {
               return <p key={place.place_id}>
                 {place.name}
               </p>
