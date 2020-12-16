@@ -15,6 +15,7 @@ import { Paper } from "@material-ui/core";
 
 
 let service;
+let currentInfoWindow;
 const libraries = ["places"];
 //map's visible container layout size
 const mapContainerStyle = {
@@ -38,7 +39,7 @@ export default function App() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
-  });
+  });  
 
   const [markers, setMarkers] = useState([])
   const [selected, setSelected] = useState(null)
@@ -68,7 +69,7 @@ export default function App() {
       radius: "500",
       type: ["restaurant"]
     }
-
+    currentInfoWindow = new window.google.maps.InfoWindow
     service = new window.google.maps.places.PlacesService(mapRef.current)
     
     service.nearbySearch(request, callback)
@@ -93,11 +94,7 @@ export default function App() {
             placeId: place.place_id,
             fields: ['name', 'formatted_address', 'geometry', 'rating',
               'website', 'photos']
-          };
-
-          /* Only fetch the details of a place when the user clicks on a marker.
-           * If we fetch the details for all place results as soon as we get
-           * the search response, we will hit API rate limits. */
+          };         
           service.getDetails(request, (placeResult, status) => {
             showDetails(placeResult, marker, status)
           });
@@ -111,10 +108,11 @@ export default function App() {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
-        placeInfowindow.setContent(`'<div><strong>' + ${placeResult.name} +
-          '</strong><br>' 'Rating: '  ${rating} '</div>'`);
+        placeInfowindow.setContent(`<div><strong> ${placeResult.name} 
+          </strong><br> Rating:   ${rating} </div>`);
         placeInfowindow.open(marker.map, marker);
-        
+        currentInfoWindow.close()
+        currentInfoWindow = placeInfowindow
       } else {
         console.log('showDetails failed: ' + status);
       }
