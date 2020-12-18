@@ -11,7 +11,7 @@ import Search from "./components/Search"
 import LocationView from "./view/locationView";
 import NavBar from "./components/AppBar";
 import Grid from "@material-ui/core/Grid"
-import { Paper } from "@material-ui/core";
+import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 
 
 let service;
@@ -109,7 +109,7 @@ export default function App() {
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
         placeInfowindow.setContent(`<div><strong> ${placeResult.name} 
-          </strong><br> Rating:   ${rating} </div>`);
+          </strong><br> Rating:   ${rating} \u272e </div>`);
         placeInfowindow.open(marker.map, marker);
         currentInfoWindow.close()
         currentInfoWindow = placeInfowindow
@@ -132,11 +132,17 @@ export default function App() {
         <Grid container item xs={4}>
           <Grid padding={5}> 
           <Paper elevation={3} style={{padding:10}}>
+            <Card>
+              <CardContent>
             {locations && locations.map((place) => {
-              return <p key={place.place_id}>
-                {place.name}
-              </p>
+              return <Typography key={place.place_id}>
+                {place.name} <br/>
+                <Typography>Rating:{place.rating}</Typography>             
+              </Typography>              
             })}
+            
+            </CardContent>
+            </Card>
             </Paper>
           </Grid>
         </Grid>
