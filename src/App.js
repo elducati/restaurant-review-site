@@ -1,18 +1,14 @@
 //import depencies
 import React, { useState, useCallback, useRef } from "react";
-import {
-  GoogleMap,
-  useLoadScript
-} from "@react-google-maps/api";
-import compass from "./compass.svg"
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import compass from "./compass.svg";
 import "@reach/combobox/styles.css";
 import mapStyles from "./mapStyles";
-import Search from "./components/Search"
+import Search from "./components/Search";
 import LocationView from "./view/locationView";
 import NavBar from "./components/AppBar";
-import Grid from "@material-ui/core/Grid"
+import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
-
 
 let service;
 let currentInfoWindow;
@@ -39,11 +35,11 @@ export default function App() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
-  });  
+  });
 
-  const [markers, setMarkers] = useState([])
-  const [selected, setSelected] = useState(null)
-  const [responseData, setResponseData] = useState({})
+  const [markers, setMarkers] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [responseData, setResponseData] = useState({});
   const onMapClick = useCallback((e) => {
     setMarkers((current) => [
       ...current,
@@ -63,44 +59,49 @@ export default function App() {
   const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(15);
-    let map = mapRef.current
+    let map = mapRef.current;
     let request = {
       location: { lat, lng },
       radius: "500",
-      type: ["restaurant"]
-    }
-    currentInfoWindow = new window.google.maps.InfoWindow
-    service = new window.google.maps.places.PlacesService(mapRef.current)
-    
-    service.nearbySearch(request, callback)
+      type: ["restaurant"],
+    };
+    currentInfoWindow = new window.google.maps.InfoWindow();
+    service = new window.google.maps.places.PlacesService(mapRef.current);
+
+    service.nearbySearch(request, callback);
     // Handle the results (up to 20) of the Nearby Search
     function callback(results, status) {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         createMarkers(results);
-        setResponseData(results)
+        setResponseData(results);
       }
     }
     // Set markers at the location of each place result
     function createMarkers(places) {
-      places.forEach(place => {
+      places.forEach((place) => {
         let marker = new window.google.maps.Marker({
           position: place.geometry.location,
           map: map,
-          title: place.name
+          title: place.name,
         });
         // Add click listener to each marker
-        window.google.maps.event.addListener(marker, 'click', () => {
+        window.google.maps.event.addListener(marker, "click", () => {
           let request = {
             placeId: place.place_id,
-            fields: ['name', 'formatted_address', 'geometry', 'rating',
-              'website', 'photos']
-          };         
+            fields: [
+              "name",
+              "formatted_address",
+              "geometry",
+              "rating",
+              "website",
+              "photos",
+            ],
+          };
           service.getDetails(request, (placeResult, status) => {
-            showDetails(placeResult, marker, status)
+            showDetails(placeResult, marker, status);
           });
-        });        
+        });
       });
-     
     }
     // Builds an InfoWindow to display details above the marker
     function showDetails(placeResult, marker, status) {
@@ -111,15 +112,15 @@ export default function App() {
         placeInfowindow.setContent(`<div><strong> ${placeResult.name} 
           </strong><br> Rating:   ${rating} \u272e </div>`);
         placeInfowindow.open(marker.map, marker);
-        currentInfoWindow.close()
-        currentInfoWindow = placeInfowindow
+        currentInfoWindow.close();
+        currentInfoWindow = placeInfowindow;
       } else {
-        console.log('showDetails failed: ' + status);
+        console.log("showDetails failed: " + status);
       }
     }
   }, []);
 
-  const locations = Array.from(responseData)
+  const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -128,25 +129,27 @@ export default function App() {
     <div>
       <NavBar />
       <Search panTo={panTo} />
-      <Grid container style={{padding:20}}>
+      <Grid container style={{ padding: 20 }}>
         <Grid container item xs={4}>
-          <Grid padding={5}> 
-          <Paper elevation={3} style={{padding:10}}>
-            <Card>
-              <CardContent>
-            {locations && locations.map((place) => {
-              return <Typography key={place.place_id}>
-                {place.name} <br/>
-                <Typography>Rating:{place.rating}</Typography>             
-              </Typography>              
-            })}
-            
-            </CardContent>
-            </Card>
+          <Grid padding={5}>
+            <Paper elevation={3} style={{ padding: 10 }}>
+              <Card>
+                <CardContent>
+                  {locations &&
+                    locations.map((place) => {
+                      return (
+                        <Typography key={place.place_id}>
+                          {place.name} <br />
+                          Rating:{place.rating}
+                        </Typography>
+                      );
+                    })}
+                </CardContent>
+              </Card>
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={8} >
+        <Grid container item xs={8}>
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
