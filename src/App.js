@@ -107,9 +107,16 @@ export default function App() {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
-        if (placeResult.rating) rating = placeResult.rating;
-        placeInfowindow.setContent(`<div><strong> ${placeResult.name} 
-          </strong><br> Rating:   ${rating} \u272e </div>`);
+        if (placeResult.rating) rating = placeResult.rating;        
+        let firstPhoto = "None"
+        try{        
+        if(placeResult.photos[0]){ firstPhoto = placeResult.photos[0].getUrl()}
+        }
+        catch{
+          console.error("error");
+        }               
+        placeInfowindow.setContent(`<div><img src=${firstPhoto} style="width:100%;max-width:400px;height:auto;"/><br><strong> ${placeResult.name} 
+          </strong><br>${placeResult.formatted_address}<br> Rating:   ${rating} \u272e </div>`);
         placeInfowindow.open(marker.map, marker);
         currentInfoWindow.close()
         currentInfoWindow = placeInfowindow
@@ -129,7 +136,7 @@ export default function App() {
       <NavBar />
       <Search panTo={panTo} />
       <Grid container style={{padding:20}}>
-        <Grid container item xs={4}>
+        <Grid container item xs={3}>
           <Grid padding={5}> 
           <Paper elevation={3} style={{padding:10}}>
             <Card>
@@ -137,7 +144,8 @@ export default function App() {
             {locations && locations.map((place) => {
               return <Typography key={place.place_id}>
                 {place.name} <br/>
-                <Typography>Rating:{place.rating}</Typography>             
+                Rating:{place.rating}
+                            
               </Typography>              
             })}
             
@@ -146,7 +154,7 @@ export default function App() {
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={8} >
+        <Grid container item xs={9} >
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
