@@ -13,12 +13,9 @@ export const LocationContextProvider = props => {
         lng: position.coords.longitude,
       });
       //console.log(position.coords.latitude, position.coords.longitude)
-
     },
     () => null
   );
-
-
 return (
   <LocationContext.Provider value={[location, setLocation]}>
     {props.children}
