@@ -16,6 +16,7 @@ export const LocationContextProvider = props => {
     },
     () => null
   );
+
 return (
   <LocationContext.Provider value={[location, setLocation]}>
     {props.children}
