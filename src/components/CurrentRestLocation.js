@@ -1,7 +1,7 @@
 import React from "react"
 import { LocationContext } from "../context/locationContext"
 
-const RestLocation = ({panTo}) => {
+const CurrentRestLocation = ({panTo}) => {
     //google maps api keys
     const location = React.useContext(LocationContext)
     //console.log(location);    
@@ -11,10 +11,9 @@ const RestLocation = ({panTo}) => {
     React.useEffect(() => {         
             panTo({lat, lng})
     }, [panTo, lat, lng])
-
     return (
         <div>
         </div>
     )
 }
-export default RestLocation
+export default CurrentRestLocation
