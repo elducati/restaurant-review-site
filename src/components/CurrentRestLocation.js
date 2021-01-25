@@ -1,8 +1,7 @@
 import React from "react"
-import { LocationContext } from "../context/locationContext"
+import { LocationContext } from "../App"
 
-const CurrentRestLocation = ({panTo}) => {
-    //google maps api keys
+const CurrentRestLocation = ({panTo}) => {    
     const location = React.useContext(LocationContext)
     //console.log(location);    
     const lat = location[0].lat

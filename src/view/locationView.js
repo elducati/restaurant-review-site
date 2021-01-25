@@ -1,12 +1,12 @@
 import CurrentRestLocation from "../components/CurrentRestLocation"
 
-const { LocationContextProvider } = require("../context/locationContext")
+const { App } = require("../App")
 
 const LocationView = ({panTo}) => {
     return (
-        <LocationContextProvider>
+        <App>
            <CurrentRestLocation panTo={panTo}/>
-        </LocationContextProvider>
+        </App>
     )
 }
 export default LocationView
