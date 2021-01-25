@@ -3,9 +3,9 @@ import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
-import Search from "../components/Search";
+import Search from "./Search";
 import LocationView from "../view/locationView";
-import NavBar from "../components/AppBar";
+import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 
@@ -29,7 +29,7 @@ const center = {
   lng: 36.8214016,
 };
 
-const Map = () => {
+const Main = () => {
   //load the map, call the loadScript custom hook and the goople map keys
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -160,4 +160,4 @@ const Map = () => {
     </div>
   );
 }
-export default Map
+export default Main
