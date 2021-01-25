@@ -136,7 +136,7 @@ const Map = () => {
                   {locations && locations.map((place) => {
                     return <Typography key={place.place_id}>
                       {place.name} <br />
-                Rating:{place.rating}
+                      Rating:{place.rating}
                     </Typography>
                   })}
                 </CardContent>

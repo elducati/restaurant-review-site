@@ -5,8 +5,7 @@ const App = () => {
   return (
     <div>
       <Map />
-      </div>
+    </div>
   )
-
 }
 export default App
