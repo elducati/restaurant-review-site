@@ -1,5 +1,5 @@
 import React from "react"
-import { LocationContext } from "../App"
+import { LocationContext } from "../context/locationContext"
 
 const CurrentRestLocation = ({panTo}) => {    
     const location = React.useContext(LocationContext)

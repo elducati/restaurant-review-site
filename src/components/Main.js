@@ -4,10 +4,10 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
 import Search from "./Search";
-import LocationView from "../view/locationView";
 import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
+import CurrentRestLocation from "./CurrentRestLocation";
 
 let service;
 let currentInfoWindow;
@@ -153,7 +153,7 @@ const Main = () => {
             options={options}
             onLoad={onMapLoad}
           >
-            <LocationView panTo={panTo} />
+            <CurrentRestLocation panTo={panTo} />
           </GoogleMap>
         </Grid>
       </Grid>
