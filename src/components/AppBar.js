@@ -12,6 +12,7 @@ const NavBar = () => {
                     <Typography color="inherit">
                         Restaurants Review
                     </Typography>
+                    <img src={compass} alt="Current Location" height="50" style={{float:"right", cursor:"pointer"}} onClick={ () => window.location.reload(false)}/>
                 </Toolbar>
             </AppBar>
             
