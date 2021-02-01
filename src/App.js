@@ -1,14 +1,11 @@
 import React from "react";
 import Main from "./components/Main";
 
-
-const { LocationContextProvider } = require("./context/locationContext")
-
 const App = () => {
     return (
-        <LocationContextProvider>           
+        <div>           
            <Main />
-        </LocationContextProvider>
+        </div>
     )
 }
 export default App

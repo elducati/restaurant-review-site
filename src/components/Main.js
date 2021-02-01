@@ -7,7 +7,8 @@ import Search from "./Search";
 import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
-import CurrentRestLocation from "./CurrentRestLocation";
+import { LocationContextProvider } from "../context/locationContext";
+import { LocationContext } from "../context/locationContext"
 
 let service;
 let currentInfoWindow;
@@ -117,7 +118,21 @@ const Main = () => {
       }
     }
   }, []);
-
+  //loads restaurants around current user location
+  const CurrentRestLocation = ({panTo}) => {    
+    const location = React.useContext(LocationContext)
+    //console.log(location);    
+    const lat = location[0].lat
+    const lng = location[0].lng
+    //console.log(lat);         
+    React.useEffect(() => {         
+            panTo({lat, lng})
+    }, [panTo, lat, lng])
+    return (
+        <div>
+        </div>
+    )
+}
   const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
@@ -153,7 +168,9 @@ const Main = () => {
             options={options}
             onLoad={onMapLoad}
           >
+            <LocationContextProvider>
             <CurrentRestLocation panTo={panTo} />
+            </LocationContextProvider>
           </GoogleMap>
         </Grid>
       </Grid>
