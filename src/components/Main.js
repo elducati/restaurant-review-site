@@ -9,6 +9,8 @@ import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CurrentRestLocation from "./CurrentRestLocation";
+import Context from "../Context";
+import FilterRestRating from "./FilterRestRating";
 
 let service;
 let currentInfoWindow;
@@ -38,6 +40,11 @@ const Main = () => {
   });
 
   const [responseData, setResponseData] = useState({});
+  const [minRating, setMinRating] = useState(1)
+  
+  const resetMinRating = (newValue) => {
+    setMinRating(newValue)
+  }
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -155,6 +162,9 @@ const Main = () => {
             onLoad={onMapLoad}
           >
             <CurrentRestLocation panTo={panTo} />
+            <Context.Provider value={{resetMinRating:resetMinRating,minRating:minRating}}>
+              <FilterRestRating />
+            </Context.Provider>
           </GoogleMap>
         </Grid>
       </Grid>
