@@ -125,7 +125,7 @@ const Main = () => {
       }
     }
   }, []);
-
+ 
   const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
