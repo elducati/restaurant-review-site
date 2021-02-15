@@ -8,7 +8,10 @@ import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import { LocationContextProvider } from "../context/locationContext";
+import CurrentRestLocation from "../components/CurrentRestLocation"
 import { LocationContext } from "../context/locationContext"
+import FilterRestRating from "./FilterRestRating";
+import Context from "../Context";
 
 let service;
 let currentInfoWindow;
@@ -38,6 +41,11 @@ const Main = () => {
   });
 
   const [responseData, setResponseData] = useState({});
+  const [minRating, setMinRating] = useState(1);
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+  const resetMinRating = (newValue) => {
+    setMinRating(newValue)
+  }
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -119,20 +127,32 @@ const Main = () => {
     }
   }, []);
   //loads restaurants around current user location
-  const CurrentRestLocation = ({panTo}) => {    
-    const location = React.useContext(LocationContext)
-    //console.log(location);    
-    const lat = location[0].lat
-    const lng = location[0].lng
-    //console.log(lat);         
-    React.useEffect(() => {         
-            panTo({lat, lng})
-    }, [panTo, lat, lng])
+  const CurrentRestLocation = ({ panTo }) => {
+    
+    React.useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+                //console.log(location)
+            },
+            () => null
+        );
+        //console.log(location);    
+        const lat = location.lat
+        const lng = location.lng
+        //console.log(lat);         
+
+        panTo({ lat, lng })
+    }, [panTo])
     return (
         <div>
         </div>
     )
 }
+
   const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
@@ -168,9 +188,11 @@ const Main = () => {
             options={options}
             onLoad={onMapLoad}
           >
-            <LocationContextProvider>
+            
             <CurrentRestLocation panTo={panTo} />
-            </LocationContextProvider>
+            <Context.Provider>
+            {location && <FilterRestRating />}
+            </Context.Provider>
           </GoogleMap>
         </Grid>
       </Grid>
