@@ -40,11 +40,12 @@ const Main = () => {
   });
 
   const [responseData, setResponseData] = useState({});
-  const [minRating, setMinRating] = useState(1)
-  
+  const [minRating, setMinRating] = useState(1);
+  const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
+
   const resetMinRating = (newValue) => {
-    setMinRating(newValue)
-  }
+    setMinRating(newValue);
+  };
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -69,7 +70,7 @@ const Main = () => {
         createMarkers(results);
         setResponseData(results);
       }
-    }
+    };
     service.nearbySearch(request, callback);
     // Set markers at the location of each place result
     const createMarkers = (places) => {
@@ -97,18 +98,19 @@ const Main = () => {
           });
         });
       });
-    }
+    };
     // Builds an InfoWindow to display details above the marker
     const showDetails = (placeResult, marker, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
-        let firstPhoto = "None"
+        let firstPhoto = "None";
         try {
-          if (placeResult.photos[0]) { firstPhoto = placeResult.photos[0].getUrl() }
-        }
-        catch {
+          if (placeResult.photos[0]) {
+            firstPhoto = placeResult.photos[0].getUrl();
+          }
+        } catch {
           console.error("error");
         }
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
@@ -123,9 +125,27 @@ const Main = () => {
       } else {
         console.log("showDetails failed: " + status);
       }
-    }
+    };
   }, []);
- 
+  const CurrentRestLocation = ({ panTo }) => {
+    React.useEffect(() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          //console.log(location);
+          const lat = location.lat;
+          const lng = location.lng;
+          //console.log(lat);
+          panTo({ lat, lng });
+        },
+        () => null
+      );      
+    }, [panTo]);
+    return <div></div>;
+  };
   const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
@@ -141,18 +161,21 @@ const Main = () => {
             <Paper elevation={3} style={{ padding: 10 }}>
               <Card>
                 <CardContent>
-                  {locations && locations.map((place) => {
-                    return <Typography key={place.place_id}>
-                      {place.name} <br />
-                Rating:{place.rating}
-                    </Typography>
-                  })}
+                  {locations &&
+                    locations.map((place) => {
+                      return (
+                        <Typography key={place.place_id}>
+                          {place.name} <br />
+                          Rating:{place.rating}
+                        </Typography>
+                      );
+                    })}
                 </CardContent>
               </Card>
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={9} >
+        <Grid container item xs={9}>
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
@@ -162,13 +185,17 @@ const Main = () => {
             onLoad={onMapLoad}
           >
             <CurrentRestLocation panTo={panTo} />
-            <Context.Provider value={{resetMinRating:resetMinRating,minRating:minRating}}>
-              <FilterRestRating />
+            <Context.Provider
+              value={{ resetMinRating: resetMinRating, 
+                minRating: minRating,
+              location: location }}
+            >
+              {location && <FilterRestRating />}
             </Context.Provider>
           </GoogleMap>
         </Grid>
       </Grid>
     </div>
   );
-}
-export default Main
+};
+export default Main;
