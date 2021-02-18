@@ -3,11 +3,14 @@ import React, { useState, useCallback, useRef } from "react";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
-import Search from "../components/Search";
+import Search from "./Search";
 import LocationView from "../view/locationView";
-import NavBar from "../components/AppBar";
+import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
+import CurrentRestLocation from "./CurrentRestLocation";
+import Context from "../Context";
+import FilterRestRating from "./FilterRestRating";
 
 let service;
 let currentInfoWindow;
@@ -29,7 +32,7 @@ const center = {
   lng: 36.8214016,
 };
 
-const Map = () => {
+const Main = () => {
   //load the map, call the loadScript custom hook and the goople map keys
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -37,6 +40,12 @@ const Map = () => {
   });
 
   const [responseData, setResponseData] = useState({});
+  const [minRating, setMinRating] = useState(1);
+  const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
+
+  const resetMinRating = (newValue) => {
+    setMinRating(newValue);
+  };
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -61,7 +70,7 @@ const Map = () => {
         createMarkers(results);
         setResponseData(results);
       }
-    }
+    };
     service.nearbySearch(request, callback);
     // Set markers at the location of each place result
     const createMarkers = (places) => {
@@ -89,18 +98,19 @@ const Map = () => {
           });
         });
       });
-    }
+    };
     // Builds an InfoWindow to display details above the marker
     const showDetails = (placeResult, marker, status) => {
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
-        let firstPhoto = "None"
+        let firstPhoto = "None";
         try {
-          if (placeResult.photos[0]) { firstPhoto = placeResult.photos[0].getUrl() }
-        }
-        catch {
+          if (placeResult.photos[0]) {
+            firstPhoto = placeResult.photos[0].getUrl();
+          }
+        } catch {
           console.error("error");
         }
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
@@ -115,9 +125,27 @@ const Map = () => {
       } else {
         console.log("showDetails failed: " + status);
       }
-    }
+    };
   }, []);
-
+  const CurrentRestLocation = ({ panTo }) => {
+    React.useEffect(() => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          //console.log(location);
+          const lat = location.lat;
+          const lng = location.lng;
+          //console.log(lat);
+          panTo({ lat, lng });
+        },
+        () => null
+      );      
+    }, [panTo]);
+    return <div></div>;
+  };
   const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
@@ -133,18 +161,21 @@ const Map = () => {
             <Paper elevation={3} style={{ padding: 10 }}>
               <Card>
                 <CardContent>
-                  {locations && locations.map((place) => {
-                    return <Typography key={place.place_id}>
-                      {place.name} <br />
-                Rating:{place.rating}
-                    </Typography>
-                  })}
+                  {locations &&
+                    locations.map((place) => {
+                      return (
+                        <Typography key={place.place_id}>
+                          {place.name} <br />
+                          Rating:{place.rating}
+                        </Typography>
+                      );
+                    })}
                 </CardContent>
               </Card>
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={9} >
+        <Grid container item xs={9}>
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
@@ -153,11 +184,18 @@ const Map = () => {
             options={options}
             onLoad={onMapLoad}
           >
-            <LocationView panTo={panTo} />
+            <CurrentRestLocation panTo={panTo} />
+            <Context.Provider
+              value={{ resetMinRating: resetMinRating, 
+                minRating: minRating,
+              location: location }}
+            >
+              {location && <FilterRestRating />}
+            </Context.Provider>
           </GoogleMap>
         </Grid>
       </Grid>
     </div>
   );
-}
-export default Map
+};
+export default Main;
