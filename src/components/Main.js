@@ -146,7 +146,7 @@ const Main = () => {
     }, [panTo]);
     return <div></div>;
   };
-  const locations = Array.from(responseData);
+  const locations = Array.from(responseData);  
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -160,16 +160,14 @@ const Main = () => {
           <Grid padding={5}>
             <Paper elevation={3} style={{ padding: 10 }}>
               <Card>
-                <CardContent>
+                <CardContent>                
                   {locations &&
-                    locations.map((place) => {
-                      return (
-                        <Typography key={place.place_id}>
-                          {place.name} <br />
-                          Rating:{place.rating}
-                        </Typography>
-                      );
-                    })}
+                    locations.filter(place => place.rating >= 4.5).map(filteredPlace =>  (                      
+                        <Typography key={filteredPlace.place_id}>
+                          {filteredPlace.name} <br />
+                          Rating:{filteredPlace.rating}
+                        </Typography>                      
+                    ))}
                 </CardContent>
               </Card>
             </Paper>
