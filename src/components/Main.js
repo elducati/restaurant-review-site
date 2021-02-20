@@ -46,7 +46,6 @@ const Main = () => {
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
-
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -142,11 +141,11 @@ const Main = () => {
           panTo({ lat, lng });
         },
         () => null
-      );      
+      );
     }, [panTo]);
     return <div></div>;
   };
-  const locations = Array.from(responseData);  
+  const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -160,13 +159,22 @@ const Main = () => {
           <Grid padding={5}>
             <Paper elevation={3} style={{ padding: 10 }}>
               <Card>
-                <CardContent>                
+                <CardContent>
+                  <Context.Provider
+                    value={{
+                      resetMinRating: resetMinRating,
+                      minRating: minRating,
+                      location: location
+                    }}
+                  >
+                    {location && <FilterRestRating />}
+                  </Context.Provider>
                   {locations &&
-                    locations.filter(place => place.rating >= 4.5).map(filteredPlace =>  (                      
-                        <Typography key={filteredPlace.place_id}>
-                          {filteredPlace.name} <br />
+                    locations.filter(place => place.rating >= minRating).map(filteredPlace => (
+                      <Typography key={filteredPlace.place_id}>
+                        {filteredPlace.name} <br />
                           Rating:{filteredPlace.rating}
-                        </Typography>                      
+                      </Typography>
                     ))}
                 </CardContent>
               </Card>
@@ -183,13 +191,7 @@ const Main = () => {
             onLoad={onMapLoad}
           >
             <CurrentRestLocation panTo={panTo} />
-            <Context.Provider
-              value={{ resetMinRating: resetMinRating, 
-                minRating: minRating,
-              location: location }}
-            >
-              {location && <FilterRestRating />}
-            </Context.Provider>
+
           </GoogleMap>
         </Grid>
       </Grid>

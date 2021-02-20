@@ -10,7 +10,7 @@ const FilterRestRating = () => {
   
     return (
       <div className="filter-rating">
-        <span className="rating-text">Min Rating:</span>
+        <span className="rating-text">Rating:</span>
         <StarRatings
           rating={minRating}
           starRatedColor="rgb(220,20,60)"
