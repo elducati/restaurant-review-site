@@ -33,7 +33,7 @@ const AddRest = () => {
     return (
 
         <div className="addrest">
-            <h1>Add Restaurant </h1>
+            <h2>Add Restaurant </h2>
             <form onSubmit={(e) => handleSubmit(e, restName, restRating)}>
                 <input type="text" value={restName} onChange={(e) => setRestName(e.target.value)} placeholder="name" />
                 <Rating
