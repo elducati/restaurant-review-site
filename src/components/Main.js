@@ -11,6 +11,7 @@ import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CurrentRestLocation from "./CurrentRestLocation";
 import Context from "../Context";
 import FilterRestRating from "./FilterRestRating";
+import AddRest from "./AddRest"
 
 let service;
 let currentInfoWindow;
@@ -42,6 +43,10 @@ const Main = () => {
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
+  const [addRestFlag, setAddRestFlag] = useState()
+  const [tempCoords, setTempCoords] = useState([])
+  const [addReviewFlag, setAddReviewFlag] = useState(false)
+
 
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
@@ -113,7 +118,7 @@ const Main = () => {
           console.error("error");
         }
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
-        style="width:100%;max-width:400px;height:auto;"/><br><strong> 
+        style="width:100%;max-width:300px;height:300px;"/><br><strong> 
         ${placeResult.name} 
           </strong><br>${placeResult.formatted_address}<br> Rating:   
           ${rating} \u272e 
@@ -164,17 +169,26 @@ const Main = () => {
                     value={{
                       resetMinRating: resetMinRating,
                       minRating: minRating,
-                      location: location
+                      location: location,
+                      addRestFlag:addRestFlag,
+                      setAddRestFlag:setAddRestFlag,
+                      addReviewFlag:addReviewFlag,
+                      setAddReviewFlag:setAddReviewFlag,
+                      tempCoords:tempCoords,
+                      setTempCoords:setTempCoords
                     }}
                   >
+                    {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&
                     locations.filter(place => place.rating >= minRating).map(filteredPlace => (
-                      <Typography key={filteredPlace.place_id}>
+                      
+                      <Typography  key={filteredPlace.place_id}>
                         {filteredPlace.name} <br />
-                          Rating:{filteredPlace.rating}
-                      </Typography>
+                        
+                        {filteredPlace.formatted_address} Rating:{filteredPlace.rating}                        
+                        </Typography>
                     ))}
                 </CardContent>
               </Card>
