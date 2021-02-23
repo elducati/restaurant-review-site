@@ -3,7 +3,7 @@ import Context from "../Context"
 import Rating from "@material-ui/lab/Rating"
 
 const AddRest = () => {
-    const { restaurants, setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
+    const { restaurants,setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
     const [restName, setRestName] = useState('')
     const [restRating, setRestRating] = useState(0)
     let restDetails = []
