@@ -3,7 +3,7 @@ import Context from "../Context"
 import Rating from "@material-ui/lab/Rating"
 
 const AddRest = () => {
-    const { restaurants, setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
+    const { restaurants,setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
     const [restName, setRestName] = useState('')
     const [restRating, setRestRating] = useState(0)
     let restDetails = []
@@ -33,7 +33,7 @@ const AddRest = () => {
     return (
 
         <div className="addrest">
-            <h1>Add Restaurant </h1>
+            <h2>Add Restaurant </h2>
             <form onSubmit={(e) => handleSubmit(e, restName, restRating)}>
                 <input type="text" value={restName} onChange={(e) => setRestName(e.target.value)} placeholder="name" />
                 <Rating

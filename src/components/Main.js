@@ -178,7 +178,7 @@ const Main = () => {
                       setTempCoords:setTempCoords
                     }}
                   >
-                    {addRestFlag && <AddRest />}
+                    <AddRest />
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&
