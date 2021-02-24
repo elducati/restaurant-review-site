@@ -12,6 +12,7 @@ import CurrentRestLocation from "./CurrentRestLocation";
 import Context from "../Context";
 import FilterRestRating from "./FilterRestRating";
 import AddRest from "./AddRest"
+import SideBar from "./SideBar";
 
 let service;
 let currentInfoWindow;
@@ -179,7 +180,8 @@ const Main = () => {
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
                     }}
-                  >
+                  > 
+                    <SideBar />
                     {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
                   </Context.Provider>

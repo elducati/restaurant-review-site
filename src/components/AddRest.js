@@ -49,6 +49,9 @@ const AddRest = () => {
                 />
                 <button>submit</button>
             </form>
+            <div>
+                {restDetails.name}
+            </div>
         </div>
     )
 }
