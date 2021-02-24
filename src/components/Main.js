@@ -43,10 +43,10 @@ const Main = () => {
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
-  const [addRestFlag, setAddRestFlag] = useState()
-  const [tempCoords, setTempCoords] = useState([])
+  const [addRestFlag, setAddRestFlag] = useState([])
+  const [tempCoords, setTempCoords] = useState(0)
   const [addReviewFlag, setAddReviewFlag] = useState(false)
-
+  const [restaurants, setRestaurants] = useState([])
 
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
@@ -170,25 +170,26 @@ const Main = () => {
                       resetMinRating: resetMinRating,
                       minRating: minRating,
                       location: location,
-                      addRestFlag:addRestFlag,
-                      setAddRestFlag:setAddRestFlag,
-                      addReviewFlag:addReviewFlag,
-                      setAddReviewFlag:setAddReviewFlag,
-                      tempCoords:tempCoords,
-                      setTempCoords:setTempCoords
+                      addRestFlag: addRestFlag,
+                      setAddRestFlag: setAddRestFlag,
+                      addReviewFlag: addReviewFlag,
+                      setAddReviewFlag: setAddReviewFlag,
+                      tempCoords: tempCoords,
+                      setTempCoords: setTempCoords,
+                      restaurants: restaurants,
+                      setRestaurants: setRestaurants,
                     }}
                   >
-                    <AddRest />
+                    {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&
                     locations.filter(place => place.rating >= minRating).map(filteredPlace => (
-                      
-                      <Typography  key={filteredPlace.place_id}>
+
+                      <Typography key={filteredPlace.place_id}>
                         {filteredPlace.name} <br />
-                        
-                        {filteredPlace.formatted_address} Rating:{filteredPlace.rating}                        
-                        </Typography>
+                        {filteredPlace.formatted_address} Rating:{filteredPlace.rating}
+                      </Typography>
                     ))}
                 </CardContent>
               </Card>

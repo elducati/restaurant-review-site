@@ -6,9 +6,10 @@ const AddRest = () => {
     const { restaurants,setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
     const [restName, setRestName] = useState('')
     const [restRating, setRestRating] = useState(0)
+    
     let restDetails = []
-    useEffect(() => {
-        console.log("AddRest")
+    
+    useEffect(() => {        
         setAddRestFlag(true)
     }, [setAddRestFlag])
     const handleSubmit = (e, restName, restRating) => {
@@ -17,8 +18,8 @@ const AddRest = () => {
             name: restName,
             geometry: {
                 location: {
-                    lat: tempCoords.geometry.location.lat,
-                    lng: tempCoords.geometry.location.lng,
+                    lat: tempCoords,
+                    lng: tempCoords
                 },
             },
             place_id: null,
@@ -26,6 +27,7 @@ const AddRest = () => {
             icon: "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png"
 
         }
+        console.log(restDetails);
         setRestaurants([...restaurants, restDetails])
         setAddRestFlag(false)
     }
