@@ -1,6 +1,7 @@
 import {useState, useContext, useEffect} from "react"
 import Context from "../Context"
 import Rating from "@material-ui/lab/Rating"
+import  "../index.css"
 
 const AddRest = () => {
     const { restaurants,setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
@@ -24,10 +25,9 @@ const AddRest = () => {
             },
             place_id: null,
             rating: restRating,
-            icon: "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png"
+            icon: "https://maps.google.com/mapfiles/kml/pal2/icon62.png"
 
-        }
-        console.log(restDetails);
+        }        
         setRestaurants([...restaurants, restDetails])
         setAddRestFlag(false)
     }
@@ -48,10 +48,7 @@ const AddRest = () => {
                     }}
                 />
                 <button>submit</button>
-            </form>
-            <div>
-                {restDetails.name}
-            </div>
+            </form>            
         </div>
     )
 }

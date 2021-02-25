@@ -1,14 +1,12 @@
 //import depencies
-import React, { useState, useCallback, useRef } from "react";
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import React, { useState, useCallback, useRef,useContext } from "react";
+import { GoogleMap, useLoadScript, Marker,InfoWindow } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
 import Search from "./Search";
-import LocationView from "../view/locationView";
 import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
-import CurrentRestLocation from "./CurrentRestLocation";
 import Context from "../Context";
 import FilterRestRating from "./FilterRestRating";
 import AddRest from "./AddRest"
@@ -40,7 +38,7 @@ const Main = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-
+    
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
@@ -48,10 +46,31 @@ const Main = () => {
   const [tempCoords, setTempCoords] = useState(0)
   const [addReviewFlag, setAddReviewFlag] = useState(false)
   const [restaurants, setRestaurants] = useState([])
+  const [markerView, setMarkerView] = useState()
+  const [selected, setSelected] = useState(null)
 
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
+
+  let data = []
+  const onMapClick = React.useCallback((event) => {
+    setAddRestFlag(!addRestFlag)
+    data = {
+      "geometry": {
+        "location": {
+          "lat": event.latLng.lat(),
+          "lng": event.latLng.lng(),
+        }
+      }
+    }
+    setTempCoords(data)
+  })
+  const onMarkerClick = (evt) => {
+    console.log("marker Clicked", evt);
+    setMarkerView(!markerView)
+  };
+
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
@@ -180,7 +199,7 @@ const Main = () => {
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
                     }}
-                  > 
+                  >
                     <SideBar />
                     {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
@@ -206,7 +225,40 @@ const Main = () => {
             center={center}
             options={options}
             onLoad={onMapLoad}
+            onClick={onMapClick}
           >
+
+            {
+              restaurants.map((restu) => {
+                if (restu.rating < minRating || !restu.rating) {
+                  return null;
+                } else {
+                  return (
+                    <div>
+                      <Marker
+                        key={restu.name}
+                        position={{
+                          lat: restu.geometry.location.lat,
+                          lng: restu.geometry.location.lng,
+                        }}
+                        onClick={() => {
+                          setSelected(restu)
+                        }
+                        }
+                      />
+                      {selected ? (
+                        <InfoWindow position={{
+                          lat: selected.geometry.location.lat,
+                          lng: selected.geometry.location.lng,
+                        }}
+                        >
+                          <span>{selected.name} has {selected.rating} star rating.</span>
+                        </InfoWindow>) : null}
+                    </div>
+                  );
+                }
+              })
+            }
             <CurrentRestLocation panTo={panTo} />
 
           </GoogleMap>

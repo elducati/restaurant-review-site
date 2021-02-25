@@ -5,7 +5,7 @@ import Popup from "reactjs-popup";
 import axios from "axios";
 import IndividualReview from "./IndividualReview";
 
-const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
+const Card = ({ name, imageSource, rating, placeid }) => {
   const [reviewResponse, setReviewResponse] = useState([]);
   const [reviewName, setReviewName] = useState("");
   const [reviewText, setReviewText] = useState("");
@@ -15,7 +15,7 @@ const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
 
   const reviewFetch = async () => {
     if (placeid != null) {
-      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=AIzaSyAlELmqkRobpn26ReMLLTirp7GHsaW8vy0`;
+      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=AIzaSyDcVYjjVPtX0jK-jJw1oOYiv5oW1cEEqOM`;
       const request = await axios.get(url).catch((error) => {
         console.log("erre", error);
       });
@@ -36,7 +36,7 @@ const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
   };
   useEffect(() => {
     reviewFetch();
-  }, [name]);
+  }, []);
 
   const handleReviewSubmit = (
     e,
@@ -53,7 +53,7 @@ const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
         rating: parseInt(reviewRating),
         text: reviewText,
         profile_photo_url:
-          "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+          "http://maps.google.com/mapfiles/kml/pal2/icon62.png",
       };
       setReviewName("");
       setReviewText("");
@@ -64,7 +64,7 @@ const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
   return (
     <div className="card">
       <img
-        src={`https://maps.googleapis.com/maps/api/place/photo?photoreference=${restImage}&sensor=false&maxheight=500&maxwidth=500&key=AIzaSyAlELmqkRobpn26ReMLLTirp7GHsaW8vy0`}
+        src={`https://maps.googleapis.com/maps/api/place/photo?photoreference=${restImage}&sensor=false&maxheight=500&maxwidth=500&key=AIzaSyDcVYjjVPtX0jK-jJw1oOYiv5oW1cEEqOM`}
         alt="restaurant "
         className="restaurant-image"
       />
@@ -161,4 +161,4 @@ const RestaurantCard = ({ name, imageSource, rating, placeid }) => {
   );
 };
 
-export default RestaurantCard;
+export default Card;

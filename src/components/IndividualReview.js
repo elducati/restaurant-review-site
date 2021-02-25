@@ -19,7 +19,7 @@ const IndividualReview = ({ photo, name, rating, text }) => {
                 <div> <StarRatings
                     rating={rating}
                     starRatedColor="rgb(220,20,60)"
-                    starDimension="30px"
+                    starDimension="20px"
                 />                </div>
 
             </div>
