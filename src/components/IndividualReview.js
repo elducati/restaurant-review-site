@@ -14,7 +14,7 @@ const IndividualReview = ({ photo, name, rating, text }) => {
                 />
             </div>
             <div className="ReviewNameRating">
-                <div><h1>{name}</h1></div>
+                <div><h2>{name}</h2></div>
                 <div><h3>{text}</h3></div>
                 <div> <StarRatings
                     rating={rating}

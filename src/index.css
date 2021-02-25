@@ -14,7 +14,7 @@ code {
 }
 
 h1 {
-  position: absolute;
+  position: relative;
   top: 1rem;
   left: 1rem;
   color: #281414;
@@ -69,12 +69,20 @@ button, input {
 .popupClass{
   display: flex;
   flex-direction: row;
+  background-color: #ffffff;
 }
 .ReviewNameRating{
   display: block;
 }
 .modal {
   font-size: 12px;
+}
+.header{
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
 }
 .modal > .header {
   width: 100%;
@@ -139,22 +147,27 @@ button, input {
 }
 .sidebar {
   width: auto;
-  border: 2px solid green;
+  border: 2px solid blue;
   max-height: 80vh;
   float: right;
   overflow: auto;
 
-  @include respond(tablet) {
-    width: 100%;
-    float: left;
-  }
+ 
 }
 .reviewarea {
   width: 100%;
   position:absolute;
-  border: 2px solid green;
   max-height: 80vh;
   float: right;
   overflow: scroll;
   
+}
+.header {
+  text-align: center;
+  border: transparent;
+  background-color: #fff;
+  padding: 2rem 3rem;
+}
+.grid {
+  overflow: scroll;
 }

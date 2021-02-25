@@ -17,11 +17,11 @@ const Card = ({ name, imageSource, rating, placeid }) => {
   const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`; 
   let reviewDetails = [];
 
-  const reviewFetch = async () => {
+  const reviewFetch = async (lati,lonn) => {
     if (placeid != null) {
-      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=${googleMapsApiKey}`;
+      const url = `https:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
       const request = await axios.get(url).catch((error) => {
-        console.log("erre", error);
+        console.log("error", error);
       });
 
       const response = request;
@@ -77,7 +77,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
         <StarRatings
           rating={rating}
           starRatedColor="rgb(220,20,60)"
-          starDimension="30px"
+          starDimension="20px"
         />
         <h2>
           <Popup
@@ -88,20 +88,20 @@ const Card = ({ name, imageSource, rating, placeid }) => {
               </button>
             }
             modal
+            nested
           >
             {(close) => (
               <div className="reviewarea">
-                <a className="close" onClick={close}>
-                  &times;
-                </a>
+                
                 <div className="header">
-                  {" "}
+                  {" "}                  
                   {name}
                   <Popup
                     trigger={open => (
                       <button className="button">Add Review - {open ? 'Opened' : 'Closed'}</button>
                     )}
-                    position="right center"  closeOnDocumentClick
+                    position="right center" 
+                    
                   >
                     <form
                       style={{ width: "auto" }}
@@ -133,6 +133,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
                       Rating:
                       <Rating
                         name="simple-controlled"
+                        size="small"
                         value={reviewRating}
                         onChange={(event, newValue) => {
                           if (newValue != null) {

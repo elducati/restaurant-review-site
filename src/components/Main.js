@@ -61,7 +61,7 @@ const Main = () => {
     setMinRating(newValue);
   };
   const searchApi = async (lati, lonn) => {
-    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+    const url = `https:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
     const request = await axios.get(url).catch((error) => {
       console.log("erre", error);
     });
@@ -76,7 +76,7 @@ const Main = () => {
   };
 
   let data = [];
-  const onMapClick = React.useCallback((event) => {
+  const onMapClick = useCallback((event,addRestFlag) => {
     setAddRestFlag(!addRestFlag);
     data = {
       geometry: {
@@ -206,7 +206,7 @@ const Main = () => {
       <NavBar />
       <Search panTo={panTo} />
       <Grid container style={{ padding: 20 }}>
-        <Grid container item xs={3}>
+        <Grid container item xs={4} className="grid">
           <Grid padding={5}>
             <Paper elevation={3} style={{ padding: 10 }}>
               <Card>
@@ -247,7 +247,7 @@ const Main = () => {
             </Paper>
           </Grid>
         </Grid>
-        <Grid container item xs={9}>
+        <Grid container item xs={8}>
           <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
