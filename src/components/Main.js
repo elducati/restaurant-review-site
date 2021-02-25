@@ -1,5 +1,5 @@
 //import depencies
-import React, { useState, useCallback, useRef, useContext } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -19,6 +19,7 @@ import SideBar from "./SideBar";
 import * as restaurantsData from "../restaurants.json";
 import axios from "axios"
 
+//initialize variables the map
 let service;
 let currentInfoWindow;
 const libraries = ["places"];
@@ -38,14 +39,16 @@ const center = {
   lat: -1.2746752,
   lng: 36.8214016,
 };
+//api key
 const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+
 const Main = () => {
   //load the map, call the loadScript custom hook and the goople map keys
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-
+//useState hook
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
@@ -53,13 +56,14 @@ const Main = () => {
   const [tempCoords, setTempCoords] = useState(0);
   const [addReviewFlag, setAddReviewFlag] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
-  const [markerView, setMarkerView] = useState();
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState();
 
+  //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
+
   const searchApi = async (lati, lonn) => {
     const url = `https:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
     const request = await axios.get(url).catch((error) => {
@@ -88,10 +92,6 @@ const Main = () => {
     };
     setTempCoords(data);
   });
-  const onMarkerClick = (evt) => {
-    console.log("marker Clicked", evt);
-    setMarkerView(!markerView);
-  };
 
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
@@ -238,7 +238,7 @@ const Main = () => {
                       .map((filteredPlace) => (
                         <Typography key={filteredPlace.place_id}>
                           {filteredPlace.name} <br />
-                          {filteredPlace.formatted_address} Rating:
+                          Rating:
                           {filteredPlace.rating}
                         </Typography>
                       ))}

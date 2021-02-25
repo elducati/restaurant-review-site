@@ -172,3 +172,7 @@ button, input {
 .grid {
   overflow: scroll;
 }
+.rating-text {
+  font-size: 1.8rem;
+  margin-right: 10px;
+}

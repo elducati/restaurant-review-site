@@ -1,7 +1,7 @@
 import React from 'react'
 import StarRatings from "react-star-ratings";
 
-
+//star rating and reviews
 const IndividualReview = ({ photo, name, rating, text }) => {
     return (
         <div className="popupClass card">

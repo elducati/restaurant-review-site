@@ -7,6 +7,7 @@ import IndividualReview from "./IndividualReview";
 import restaurant from "../restaurant.svg"
 import 'reactjs-popup/dist/index.css';
 
+//Restaurant render card
 const Card = ({ name, imageSource, rating, placeid }) => {
   const [reviewResponse, setReviewResponse] = useState([]);
   const [reviewName, setReviewName] = useState("");
@@ -40,7 +41,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
   };
   useEffect(() => {
     reviewFetch();
-  }, []);
+  }, );
 
   const handleReviewSubmit = (
     e,
