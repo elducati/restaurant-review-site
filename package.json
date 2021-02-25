@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@reach/combobox": "^0.11.2",
     "@react-google-maps/api": "^1.13.0",
     "@testing-library/jest-dom": "^5.11.5",
@@ -14,6 +15,9 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
+    "react-star-ratings": "^2.3.0",
+    "reactjs-popup": "^2.0.4",
+    "shortid": "^2.2.15",
     "use-places-autocomplete": "^1.5.9",
     "web-vitals": "^0.2.4"
   },
