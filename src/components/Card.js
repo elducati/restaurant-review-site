@@ -98,7 +98,10 @@ const Card = ({ name, imageSource, rating, placeid }) => {
                   {" "}
                   {name}
                   <Popup
-                    trigger={<button className="button"> Add Review </button>}
+                    trigger={open => (
+                      <button className="button">Add Review - {open ? 'Opened' : 'Closed'}</button>
+                    )}
+                    position="right center"  closeOnDocumentClick
                   >
                     <form
                       style={{ width: "auto" }}
