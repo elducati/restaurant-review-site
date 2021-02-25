@@ -1,6 +1,11 @@
 //import depencies
-import React, { useState, useCallback, useRef,useContext } from "react";
-import { GoogleMap, useLoadScript, Marker,InfoWindow } from "@react-google-maps/api";
+import React, { useState, useCallback, useRef, useContext } from "react";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
 import Search from "./Search";
@@ -9,8 +14,10 @@ import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import Context from "../Context";
 import FilterRestRating from "./FilterRestRating";
-import AddRest from "./AddRest"
+import AddRest from "./AddRest";
 import SideBar from "./SideBar";
+import * as restaurantsData from "../restaurants.json";
+import axios from "axios"
 
 let service;
 let currentInfoWindow;
@@ -31,44 +38,59 @@ const center = {
   lat: -1.2746752,
   lng: 36.8214016,
 };
-
+const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
 const Main = () => {
   //load the map, call the loadScript custom hook and the goople map keys
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-    
+
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
-  const [addRestFlag, setAddRestFlag] = useState([])
-  const [tempCoords, setTempCoords] = useState(0)
-  const [addReviewFlag, setAddReviewFlag] = useState(false)
-  const [restaurants, setRestaurants] = useState([])
-  const [markerView, setMarkerView] = useState()
-  const [selected, setSelected] = useState(null)
+  const [addRestFlag, setAddRestFlag] = useState([]);
+  const [tempCoords, setTempCoords] = useState(0);
+  const [addReviewFlag, setAddReviewFlag] = useState(false);
+  const [restaurants, setRestaurants] = useState([]);
+  const [markerView, setMarkerView] = useState();
+  const [selected, setSelected] = useState(null);
+  const [error, setError] = useState();
 
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
-
-  let data = []
-  const onMapClick = React.useCallback((event) => {
-    setAddRestFlag(!addRestFlag)
-    data = {
-      "geometry": {
-        "location": {
-          "lat": event.latLng.lat(),
-          "lng": event.latLng.lng(),
-        }
-      }
+  const searchApi = async (lati, lonn) => {
+    const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+    const request = await axios.get(url).catch((error) => {
+      console.log("erre", error);
+    });
+    const response = request;
+    if (response && response.status !== 200) {
+      setError("Error fetching information");
     }
-    setTempCoords(data)
-  })
+    if (response) {
+      console.log("sss", restaurantsData.default);
+      setRestaurants(...restaurants, response.data.results);
+    }
+  };
+
+  let data = [];
+  const onMapClick = React.useCallback((event) => {
+    setAddRestFlag(!addRestFlag);
+    data = {
+      geometry: {
+        location: {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
+        },
+      },
+    };
+    setTempCoords(data);
+  });
   const onMarkerClick = (evt) => {
     console.log("marker Clicked", evt);
-    setMarkerView(!markerView)
+    setMarkerView(!markerView);
   };
 
   const mapRef = useRef();
@@ -159,7 +181,11 @@ const Main = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          //console.log(location);
+          searchApi(position.coords.latitude, position.coords.longitude);
+          setRestaurants(restaurantsData.default);
+          if (location) {
+            searchApi();
+          }
           const lat = location.lat;
           const lng = location.lng;
           //console.log(lat);
@@ -187,6 +213,8 @@ const Main = () => {
                 <CardContent>
                   <Context.Provider
                     value={{
+                      error:error,
+                      setError: setError,
                       resetMinRating: resetMinRating,
                       minRating: minRating,
                       location: location,
@@ -205,13 +233,15 @@ const Main = () => {
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&
-                    locations.filter(place => place.rating >= minRating).map(filteredPlace => (
-
-                      <Typography key={filteredPlace.place_id}>
-                        {filteredPlace.name} <br />
-                        {filteredPlace.formatted_address} Rating:{filteredPlace.rating}
-                      </Typography>
-                    ))}
+                    locations
+                      .filter((place) => place.rating >= minRating)
+                      .map((filteredPlace) => (
+                        <Typography key={filteredPlace.place_id}>
+                          {filteredPlace.name} <br />
+                          {filteredPlace.formatted_address} Rating:
+                          {filteredPlace.rating}
+                        </Typography>
+                      ))}
                 </CardContent>
               </Card>
             </Paper>
@@ -227,40 +257,39 @@ const Main = () => {
             onLoad={onMapLoad}
             onClick={onMapClick}
           >
-
-            {
-              restaurants.map((restu) => {
-                if (restu.rating < minRating || !restu.rating) {
-                  return null;
-                } else {
-                  return (
-                    <div>
-                      <Marker
-                        key={restu.name}
+            {restaurants.map((restu) => {
+              if (restu.rating < minRating || !restu.rating) {
+                return null;
+              } else {
+                return (
+                  <div>
+                    <Marker
+                      key={restu.name}
+                      position={{
+                        lat: restu.geometry.location.lat,
+                        lng: restu.geometry.location.lng,
+                      }}
+                      onClick={() => {
+                        setSelected(restu);
+                      }}
+                    />
+                    {selected ? (
+                      <InfoWindow
                         position={{
-                          lat: restu.geometry.location.lat,
-                          lng: restu.geometry.location.lng,
-                        }}
-                        onClick={() => {
-                          setSelected(restu)
-                        }
-                        }
-                      />
-                      {selected ? (
-                        <InfoWindow position={{
                           lat: selected.geometry.location.lat,
                           lng: selected.geometry.location.lng,
                         }}
-                        >
-                          <span>{selected.name} has {selected.rating} star rating.</span>
-                        </InfoWindow>) : null}
-                    </div>
-                  );
-                }
-              })
-            }
+                      >
+                        <span>
+                          {selected.name} has {selected.rating} star rating.
+                        </span>
+                      </InfoWindow>
+                    ) : null}
+                  </div>
+                );
+              }
+            })}
             <CurrentRestLocation panTo={panTo} />
-
           </GoogleMap>
         </Grid>
       </Grid>

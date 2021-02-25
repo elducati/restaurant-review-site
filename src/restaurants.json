@@ -1,0 +1,124 @@
+[
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": { "lat": -1.278375, "lng": 36.8163346 },
+      "viewport": {
+        "northeast": { "lat": -1.277140869708498, "lng": 36.8176371802915 },
+        "southwest": { "lat": -1.279838830291502, "lng": 36.8149392197085 }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "name": "Hotel Fairmont The Norfolk",
+    "opening_hours": { "open_now": true },
+    "photos": [
+      {
+        "height": 2002,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112710268148963760234\">Hotel Fairmont The Norfolk</a>"
+        ],
+        "photo_reference": "ATtYBwJn6H045ZJch-7iEmQhcchlr5sYJKg87f25tZM-2-e9-d6-BvH9i8X3kUxKB226teHhnlumEumSWfsJiTmea2dOMUSiz3opXNqLVyEUFNPLtf6W4IqkLYjN22pr5YB8J6-g8mXG5R4ON8SXdRhEe8pr-1xX0c9xtIL8nEqOzEk7_6Kp",
+        "width": 3000
+      }
+    ],
+    "place_id": "ChIJy4gsBC0XLxgRYYmqBERDcfI",
+    "plus_code": {
+      "compound_code": "PRC8+MG Nairobi, Kenya",
+      "global_code": "6GCRPRC8+MG"
+    },
+    "rating": 4.6,
+    "reference": "ChIJy4gsBC0XLxgRYYmqBERDcfI",
+    "scope": "GOOGLE",
+    "types": [
+      "lodging",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 2200,
+    "vicinity": "Harry Thuku Rd"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": { "lat": -1.2855716, "lng": 36.8202294 },
+      "viewport": {
+        "northeast": { "lat": -1.284167319708498, "lng": 36.8218312802915 },
+        "southwest": { "lat": -1.286865280291502, "lng": 36.8191333197085 }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
+    "name": "Sentrim Hotels and Lodges",
+    "opening_hours": { "open_now": true },
+    "photos": [
+      {
+        "height": 437,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/118248990539042374846\">Sentrim Hotels and Lodges</a>"
+        ],
+        "photo_reference": "ATtYBwJCxh_nl9NNd0OjrdJYinJFrgY9EJ0eP8PQi-ZKZ2eedlf9sQzyyeXb_YxBluPZi9Br-I_VP73Bu1bjTn7IoaXmYbiJPQooV_5UgE9kpvgmxSduBsACrR96zPSIB7eDCoh5GJqm0mrxSLKOt2SRZZB4K0uOLx6Wa1Vy3oT6lxGUZgz2",
+        "width": 660
+      }
+    ],
+    "place_id": "ChIJTcUF2dYQLxgRq2j27WKs7Mw",
+    "plus_code": {
+      "compound_code": "PR7C+Q3 Nairobi, Kenya",
+      "global_code": "6GCRPR7C+Q3"
+    },
+    "price_level": 2,
+    "rating": 4,
+    "reference": "ChIJTcUF2dYQLxgRq2j27WKs7Mw",
+    "scope": "GOOGLE",
+    "types": [
+      "restaurant",
+      "bar",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 1523,
+    "vicinity": "Kenyatta Avenue"
+  },
+  {
+    "business_status": "OPERATIONAL",
+    "geometry": {
+      "location": { "lat": -1.2870297, "lng": 36.8145232 },
+      "viewport": {
+        "northeast": { "lat": -1.285835119708498, "lng": 36.8157845802915 },
+        "southwest": { "lat": -1.288533080291502, "lng": 36.8130866197085 }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+    "name": "Nairobi Serena Hotel",
+    "opening_hours": { "open_now": true },
+    "photos": [
+      {
+        "height": 2670,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/112246991135533820110\">Nairobi Serena Hotel</a>"
+        ],
+        "photo_reference": "ATtYBwKUq1DXi8bbuHhdIdXsoPQFCUWQXwb9hF3imgiEN1IInlkkn4ra2skQLMUzelTiFuuVlQFwCmPUwso89g4lnE7NpHsG-uNXUeoOy-OLOIcafu_-kHH9XcLdFrOfPyt2ELoq9iPSMJAz_6Yl9E6IxtMhv__dWJgTiKaLsxa8yfx3WDh2",
+        "width": 4000
+      }
+    ],
+    "place_id": "ChIJnfDwxNYQLxgRsKQVsmtU6vw",
+    "plus_code": {
+      "compound_code": "PR77+5R Nairobi, Kenya",
+      "global_code": "6GCRPR77+5R"
+    },
+    "rating": 4.6,
+    "reference": "ChIJnfDwxNYQLxgRsKQVsmtU6vw",
+    "scope": "GOOGLE",
+    "types": [
+      "lodging",
+      "restaurant",
+      "food",
+      "point_of_interest",
+      "establishment"
+    ],
+    "user_ratings_total": 2606,
+    "vicinity": "Processional Way, Nairobi City"
+  }
+  
+]

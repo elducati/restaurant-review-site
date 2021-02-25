@@ -4,6 +4,8 @@ import Rating from "@material-ui/lab/Rating";
 import Popup from "reactjs-popup";
 import axios from "axios";
 import IndividualReview from "./IndividualReview";
+import restaurant from "../restaurant.svg"
+import 'reactjs-popup/dist/index.css';
 
 const Card = ({ name, imageSource, rating, placeid }) => {
   const [reviewResponse, setReviewResponse] = useState([]);
@@ -11,11 +13,13 @@ const Card = ({ name, imageSource, rating, placeid }) => {
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
   const [restImage, setRestImage] = useState("");
+  
+  const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`; 
   let reviewDetails = [];
 
   const reviewFetch = async () => {
     if (placeid != null) {
-      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=AIzaSyDcVYjjVPtX0jK-jJw1oOYiv5oW1cEEqOM`;
+      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=${googleMapsApiKey}`;
       const request = await axios.get(url).catch((error) => {
         console.log("erre", error);
       });
@@ -64,7 +68,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
   return (
     <div className="card">
       <img
-        src={`https://maps.googleapis.com/maps/api/place/photo?photoreference=${restImage}&sensor=false&maxheight=500&maxwidth=500&key=AIzaSyDcVYjjVPtX0jK-jJw1oOYiv5oW1cEEqOM`}
+        src={restaurant}
         alt="restaurant "
         className="restaurant-image"
       />
