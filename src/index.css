@@ -159,7 +159,7 @@ button, input {
   position:absolute;
   max-height: 80vh;
   float: right;
-  overflow: scroll;
+  border-radius: 10px; 
   
 }
 .header {
@@ -167,6 +167,7 @@ button, input {
   border: transparent;
   background-color: #fff;
   padding: 2rem 3rem;
+  border-radius: 10px;
 }
 .grid {
   overflow: scroll;
