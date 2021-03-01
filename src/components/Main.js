@@ -18,6 +18,7 @@ import AddRest from "./AddRest";
 import SideBar from "./SideBar";
 import * as restaurantsData from "../restaurants.json";
 import axios from "axios"
+import restaurant from "../restaurant.svg"
 
 //initialize variables the map
 let service;
@@ -65,7 +66,7 @@ const Main = () => {
   };
 
   const searchApi = async (lati, lonn) => {
-    const url = `https:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+    const url = `htttps:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
     const request = await axios.get(url).catch((error) => {
       console.log("erre", error);
     });
@@ -156,6 +157,9 @@ const Main = () => {
           if (placeResult.photos[0]) {
             firstPhoto = placeResult.photos[0].getUrl();
           }
+          else{
+            firstPhoto = {restaurant}
+          }
         } catch {
           console.error("error");
         }
@@ -227,7 +231,7 @@ const Main = () => {
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
                     }}
-                  >
+                  >                   
                     <SideBar />
                     {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}

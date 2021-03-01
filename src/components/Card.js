@@ -20,7 +20,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
 
   const reviewFetch = async (lati,lonn) => {
     if (placeid != null) {
-      const url = `https:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+      const url = `htttps:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
       const request = await axios.get(url).catch((error) => {
         console.log("error", error);
       });
@@ -39,9 +39,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
       setReviewResponse([]);
     }
   };
-  useEffect(() => {
-    reviewFetch();
-  }, );
+  
 
   const handleReviewSubmit = (
     e,
