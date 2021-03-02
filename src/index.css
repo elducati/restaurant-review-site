@@ -53,10 +53,10 @@ h1 {
 }
 .addrest{
   z-index: 1;
-  position: relative;  
+  position: absolute;  
   height: auto;
   width: auto;
-  
+  float: left;
 }
 
 button, input {

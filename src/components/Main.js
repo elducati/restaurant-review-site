@@ -19,6 +19,7 @@ import SideBar from "./SideBar";
 import * as restaurantsData from "../restaurants.json";
 import axios from "axios"
 import restaurant from "../restaurant.svg"
+import shortid from "shortid";
 
 //initialize variables the map
 let service;
@@ -243,6 +244,7 @@ const Main = () => {
                       setLng: setLng,
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
+                      setOpen:setOpen
                     }}
                   >
                     <SideBar />
@@ -265,7 +267,7 @@ const Main = () => {
           </Grid>
         </Grid>
         <Grid container item xs={8}>
-          <GoogleMap
+          <GoogleMap                    
             id="map"
             mapContainerStyle={mapContainerStyle}
             zoom={15}
@@ -281,10 +283,10 @@ const Main = () => {
                 return (
                   <div>
                     <Marker
-                      key={restu.name}
+                      key={shortid.generate()} 
                       position={{
-                        lat: restu.geometry.location.lat,
-                        lng: restu.geometry.location.lng,
+                        lat: lat,
+                        lng: lng,
                       }}
                       onClick={() => {
                         setSelected(restu);
