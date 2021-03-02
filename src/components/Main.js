@@ -49,22 +49,30 @@ const Main = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-//useState hook
+  //useState hook
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });
   const [addRestFlag, setAddRestFlag] = useState([]);
-  const [tempCoords, setTempCoords] = useState(0);
   const [addReviewFlag, setAddReviewFlag] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState();
+  const [lat, setLat] = useState(0)
+  const [lng, setLng] = useState(0)
+  const [open, setOpen] = useState(false)
 
   //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
-
+  //state function to handle opening and closing of popup
+  const handleOpen = () => {
+    setOpen(true)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   const searchApi = async (lati, lonn) => {
     const url = `htttps:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
     const request = await axios.get(url).catch((error) => {
@@ -81,17 +89,20 @@ const Main = () => {
   };
 
   let data = [];
-  const onMapClick = useCallback((event,addRestFlag) => {
+  const onMapClick = ((event, addRestFlag) => {
+    console.log(event.latLng);
     setAddRestFlag(!addRestFlag);
-    data = {
-      geometry: {
-        location: {
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng(),
-        },
-      },
-    };
-    setTempCoords(data);
+
+    let lat = event.latLng.lat()
+    let lng = event.latLng.lng()
+    //set coordinates states on click
+    setLat(lat);
+    setLng(lng)
+    //call the popup
+    handleOpen()
+    console.log(
+      "You clicked on the coordinates => lng: " + lng + " lat:" + lat
+    );
   });
 
   const mapRef = useRef();
@@ -157,8 +168,8 @@ const Main = () => {
           if (placeResult.photos[0]) {
             firstPhoto = placeResult.photos[0].getUrl();
           }
-          else{
-            firstPhoto = {restaurant}
+          else {
+            firstPhoto = { restaurant }
           }
         } catch {
           console.error("error");
@@ -217,7 +228,7 @@ const Main = () => {
                 <CardContent>
                   <Context.Provider
                     value={{
-                      error:error,
+                      error: error,
                       setError: setError,
                       resetMinRating: resetMinRating,
                       minRating: minRating,
@@ -226,14 +237,16 @@ const Main = () => {
                       setAddRestFlag: setAddRestFlag,
                       addReviewFlag: addReviewFlag,
                       setAddReviewFlag: setAddReviewFlag,
-                      tempCoords: tempCoords,
-                      setTempCoords: setTempCoords,
+                      lat: lat,
+                      setlat: setLat,
+                      lng: lng,
+                      setLng: setLng,
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
                     }}
-                  >                   
+                  >
                     <SideBar />
-                    {addRestFlag && <AddRest />}
+                    {<AddRest open={open} onClose={handleClose} />}
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&

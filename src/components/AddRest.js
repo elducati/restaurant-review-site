@@ -2,10 +2,11 @@ import {useState, useContext, useEffect} from "react"
 import Context from "../Context"
 import Rating from "@material-ui/lab/Rating"
 import  "../index.css"
+import shortid from "shortid"
 
 //add new restaurant
 const AddRest = () => {
-    const { restaurants,setAddRestFlag, setRestaurants, tempCoords } = useContext(Context);
+    const { restaurants,setAddRestFlag, setRestaurants, lat,lng, open, setOpen } = useContext(Context);
     const [restName, setRestName] = useState('')
     const [restRating, setRestRating] = useState(0)
     
@@ -16,15 +17,12 @@ const AddRest = () => {
     }, [setAddRestFlag])
     const handleSubmit = (e, restName, restRating) => {
         e.preventDefault()
+        setOpen(false)
         restDetails = {
             name: restName,
-            geometry: {
-                location: {
-                    lat: tempCoords,
-                    lng: tempCoords
-                },
-            },
-            place_id: null,
+            lat:lat,
+            lng:lng,
+            place_id: shortid.generate(),
             rating: restRating,
             icon: "https://maps.google.com/mapfiles/kml/pal2/icon62.png"
 
