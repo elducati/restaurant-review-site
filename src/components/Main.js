@@ -61,23 +61,16 @@ const Main = () => {
   const [error, setError] = useState();
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
-  const [open, setOpen] = useState(false)
-
+  
   //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
-  //state function to handle opening and closing of popup
-  const handleOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
+  
   const searchApi = async (lati, lonn) => {
-    const url = `htttps:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+    const url = `url`;
     const request = await axios.get(url).catch((error) => {
-      console.log("erre", error);
+      console.log("error!", error);
     });
     const response = request;
     if (response && response.status !== 200) {
@@ -89,7 +82,7 @@ const Main = () => {
     }
   };
 
-  let data = [];
+  
   const onMapClick = ((event, addRestFlag) => {
     console.log(event.latLng);
     setAddRestFlag(!addRestFlag);
@@ -99,8 +92,7 @@ const Main = () => {
     //set coordinates states on click
     setLat(lat);
     setLng(lng)
-    //call the popup
-    handleOpen()
+    
     console.log(
       "You clicked on the coordinates => lng: " + lng + " lat:" + lat
     );
@@ -244,11 +236,11 @@ const Main = () => {
                       setLng: setLng,
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
-                      setOpen:setOpen
+                      
                     }}
                   >
                     <SideBar />
-                    {<AddRest open={open} onClose={handleClose} />}
+                    {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   {locations &&
@@ -295,13 +287,13 @@ const Main = () => {
                     {selected ? (
                       <InfoWindow
                         position={{
-                          lat: selected.geometry.location.lat,
-                          lng: selected.geometry.location.lng,
+                          lat: selected.lat,
+                          lng: selected.lng,
                         }}
                       >
                         <span>
-                          {selected.name} has {selected.rating} star rating.
-                        </span>
+                          {selected.name} has {selected.rating} star rating.                          
+                        </span>                        
                       </InfoWindow>
                     ) : null}
                   </div>

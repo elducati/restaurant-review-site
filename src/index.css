@@ -54,6 +54,9 @@ h1 {
 .addrest{
   z-index: 1;
   position: absolute;  
+  margin-left: 235px;
+  margin-top: 581px;
+  background-color: lightgray;
   height: auto;
   width: auto;
   float: left;
@@ -69,6 +72,8 @@ button, input {
 .popupClass{
   display: flex;
   flex-direction: row;
+  border-radius: 10px;
+  border: 1px solid aquamarine;
   background-color: #ffffff;
 }
 .ReviewNameRating{

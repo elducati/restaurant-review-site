@@ -9,6 +9,7 @@ import 'reactjs-popup/dist/index.css';
 
 //Restaurant render card
 const Card = ({ name, imageSource, rating, placeid }) => {
+  
   const [reviewResponse, setReviewResponse] = useState([]);
   const [reviewName, setReviewName] = useState("");
   const [reviewText, setReviewText] = useState("");

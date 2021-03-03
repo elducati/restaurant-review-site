@@ -6,7 +6,7 @@ import shortid from "shortid"
 
 //add new restaurant
 const AddRest = () => {
-    const { restaurants,setAddRestFlag, setRestaurants, lat,lng, open, setOpen } = useContext(Context);
+    const { restaurants,setAddRestFlag, setRestaurants, lat,lng } = useContext(Context);
     const [restName, setRestName] = useState('')
     const [restRating, setRestRating] = useState(0)
     
@@ -17,7 +17,7 @@ const AddRest = () => {
     }, [setAddRestFlag])
     const handleSubmit = (e, restName, restRating) => {
         e.preventDefault()
-        setOpen(false)
+        
         restDetails = {
             name: restName,
             lat:lat,
