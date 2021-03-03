@@ -61,12 +61,12 @@ const Main = () => {
   const [error, setError] = useState();
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
-  
+
   //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
   };
-  
+
   const searchApi = async (lati, lonn) => {
     const url = `url`;
     const request = await axios.get(url).catch((error) => {
@@ -82,7 +82,7 @@ const Main = () => {
     }
   };
 
-  
+
   const onMapClick = ((event, addRestFlag) => {
     console.log(event.latLng);
     setAddRestFlag(!addRestFlag);
@@ -92,7 +92,7 @@ const Main = () => {
     //set coordinates states on click
     setLat(lat);
     setLng(lng)
-    
+
     console.log(
       "You clicked on the coordinates => lng: " + lng + " lat:" + lat
     );
@@ -236,7 +236,6 @@ const Main = () => {
                       setLng: setLng,
                       restaurants: restaurants,
                       setRestaurants: setRestaurants,
-                      
                     }}
                   >
                     <SideBar />
@@ -259,7 +258,7 @@ const Main = () => {
           </Grid>
         </Grid>
         <Grid container item xs={8}>
-          <GoogleMap                    
+          <GoogleMap
             id="map"
             mapContainerStyle={mapContainerStyle}
             zoom={15}
@@ -268,20 +267,26 @@ const Main = () => {
             onLoad={onMapLoad}
             onClick={onMapClick}
           >
-            {restaurants.map((restu) => {
+            {restaurants.map((restu, index) => {
               if (restu.rating < minRating || !restu.rating) {
                 return null;
               } else {
                 return (
                   <div>
                     <Marker
-                      key={shortid.generate()} 
+                      key={index}
                       position={{
                         lat: lat,
                         lng: lng,
                       }}
                       onClick={() => {
                         setSelected(restu);
+                      }}
+                      icon={{
+                        url: restaurant,
+                        origin: new window.google.maps.Point(2, 2),
+                        anchor: new window.google.maps.Point(15, 15),
+                        scaledSize: new window.google.maps.Size(30, 30),
                       }}
                     />
                     {selected ? (
@@ -290,10 +295,16 @@ const Main = () => {
                           lat: selected.lat,
                           lng: selected.lng,
                         }}
+                        onCloseClick={()=>{
+                          setSelected(null)
+                        }}
                       >
-                        <span>
-                          {selected.name} has {selected.rating} star rating.                          
-                        </span>                        
+                        <div>
+                          <img src={restaurant} alt="placeholder" />
+                          <span>
+                            <h2>{selected.name}</h2>  {selected.rating} Star Rating.
+                        </span>
+                        </div>
                       </InfoWindow>
                     ) : null}
                   </div>
