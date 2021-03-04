@@ -3,7 +3,7 @@ import Context from "../Context";
 import Card from "./Card";
 import shortid from "shortid";
 
-
+//render restaurants in sidebar
 const SideBar = () => {
   const { restaurants, minRating } = useContext(Context);
   return (

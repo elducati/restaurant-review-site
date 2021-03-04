@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import compass from "../compass.svg"
 
+//top appbar
 const NavBar = () => {
     return(
         <div>

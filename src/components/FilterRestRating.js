@@ -2,6 +2,7 @@ import {useContext} from "react"
 import Context from "../Context"
 import StarRatings from "react-star-ratings"
 
+//filter restaurants by ratings
 const FilterRestRating = () => {
     const { minRating, resetMinRating } = useContext(Context);
     const changeRating = (newRating) => {

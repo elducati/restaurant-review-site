@@ -10,6 +10,8 @@ import usePlacesAutocomplete, {
     ComboboxList,
     ComboboxOption,
   } from "@reach/combobox"; 
+
+  
 //search a place using the autocomplete functionality
 const Search = ({ panTo }) => {
     const {

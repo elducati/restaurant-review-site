@@ -7,7 +7,7 @@ import IndividualReview from "./IndividualReview";
 import restaurant from "../restaurant.svg"
 import 'reactjs-popup/dist/index.css';
 
-//Restaurant render card
+//Add review and review render area
 const Card = ({ name, imageSource, rating, placeid }) => {
   
   const [reviewResponse, setReviewResponse] = useState([]);
