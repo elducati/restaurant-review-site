@@ -17,7 +17,7 @@ import FilterRestRating from "./FilterRestRating";
 import AddRest from "./AddRest";
 import SideBar from "./SideBar";
 import * as restaurantsData from "../restaurants.json";
-import axios from "axios"
+import compass from "../compass.svg"
 import restaurant from "../restaurant.svg"
 import shortid from "shortid";
 
@@ -267,14 +267,14 @@ const Main = () => {
             onLoad={onMapLoad}
             onClick={onMapClick}
           >
-            {restaurants.map((restu, index) => {
+            {restaurants.map((restu) => {
               if (restu.rating < minRating || !restu.rating) {
                 return null;
               } else {
                 return (
                   <div>
                     <Marker
-                      key={index}
+                      key={`${lat}-${lng}`}
                       position={{
                         lat: lat,
                         lng: lng,
@@ -283,10 +283,10 @@ const Main = () => {
                         setSelected(restu);
                       }}
                       icon={{
-                        url: restaurant,
+                        url: compass,
                         origin: new window.google.maps.Point(2, 2),
                         anchor: new window.google.maps.Point(15, 15),
-                        scaledSize: new window.google.maps.Size(30, 30),
+                        scaledSize: new window.google.maps.Size(40, 40),
                       }}
                     />
                     {selected ? (

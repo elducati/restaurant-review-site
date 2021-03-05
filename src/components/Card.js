@@ -151,6 +151,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
                     return (
                       <div>
                         <IndividualReview
+                        key={restu.placeid}
                           photo={restu.profile_photo_url}
                           name={restu.author_name}
                           rating={restu.rating}
