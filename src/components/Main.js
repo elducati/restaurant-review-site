@@ -67,20 +67,20 @@ const Main = () => {
     setMinRating(newValue);
   };
 
-  const searchApi = async (lati, lonn) => {
-    const url = `url`;
-    const request = await axios.get(url).catch((error) => {
-      console.log("error!", error);
-    });
-    const response = request;
-    if (response && response.status !== 200) {
-      setError("Error fetching information");
-    }
-    if (response) {
-      console.log("sss", restaurantsData.default);
-      setRestaurants(...restaurants, response.data.results);
-    }
-  };
+  // const searchApi = async (lati, lonn) => {
+  //   const url = `url`;
+  //   const request = await axios.get(url).catch((error) => {
+  //     console.log("error!", error);
+  //   });
+  //   const response = request;
+  //   if (response && response.status !== 200) {
+  //     setError("Error fetching information");
+  //   }
+  //   if (response) {
+  //     console.log("sss", restaurantsData.default);
+  //     setRestaurants(...restaurants, response.data.results);
+  //   }
+  // };
 
 
   const onMapClick = ((event, addRestFlag) => {
@@ -189,11 +189,11 @@ const Main = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          searchApi(position.coords.latitude, position.coords.longitude);
+          //searchApi(position.coords.latitude, position.coords.longitude);
           setRestaurants(restaurantsData.default);
-          if (location) {
-            searchApi();
-          }
+          // if (location) {
+          //   searchApi();
+          // }
           const lat = location.lat;
           const lng = location.lng;
           //console.log(lat);
