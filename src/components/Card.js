@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import StarRatings from "react-star-ratings";
 import Rating from "@material-ui/lab/Rating";
 import Popup from "reactjs-popup";
@@ -14,14 +14,14 @@ const Card = ({ name, imageSource, rating, placeid }) => {
   const [reviewName, setReviewName] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
-  const [restImage, setRestImage] = useState("");
+  //const [restImage, setRestImage] = useState("");
   
   const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`; 
   let reviewDetails = [];
 
   const reviewFetch = async (lati,lonn) => {
     if (placeid != null) {
-      const url = `htttps:///maps.googleapis.com/maps/api/place/nearbysearch/json?locations=${lati},${lonn}&radius=1500&type=restaurant&key=${googleMapsApiKey}`;
+      const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeid}&key=${googleMapsApiKey}`;
       const request = await axios.get(url).catch((error) => {
         console.log("error", error);
       });
@@ -32,7 +32,7 @@ const Card = ({ name, imageSource, rating, placeid }) => {
       }
       if (response) {
         if (response.data.result.photos != null) {
-          setRestImage(response.data.result.photos[0].photo_reference);
+          //setRestImage(response.data.result.photos[0].photo_reference);
           setReviewResponse(response.data.result.reviews);
         }
       }

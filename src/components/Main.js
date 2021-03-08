@@ -19,7 +19,6 @@ import SideBar from "./SideBar";
 import * as restaurantsData from "../restaurants.json";
 import compass from "../compass.svg"
 import restaurant from "../restaurant.svg"
-import shortid from "shortid";
 
 //initialize variables the map
 let service;
@@ -41,8 +40,7 @@ const center = {
   lat: -1.2746752,
   lng: 36.8214016,
 };
-//api key
-const googleMapsApiKey = `${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`;
+
 
 const Main = () => {
   //load the map, call the loadScript custom hook and the goople map keys
@@ -61,7 +59,8 @@ const Main = () => {
   const [error, setError] = useState();
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
-
+  
+  
   //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
@@ -84,7 +83,7 @@ const Main = () => {
 
 
   const onMapClick = ((event, addRestFlag) => {
-    console.log(event.latLng);
+    
     setAddRestFlag(!addRestFlag);
 
     let lat = event.latLng.lat()
@@ -142,6 +141,7 @@ const Main = () => {
               "rating",
               "website",
               "photos",
+              "reviews"
             ],
           };
           service.getDetails(request, (placeResult, status) => {
@@ -167,11 +167,16 @@ const Main = () => {
         } catch {
           console.error("error");
         }
+        const reviewss = Array.from(placeResult.reviews)        
+        
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
         style="width:100%;max-width:300px;height:300px;"/><br><strong> 
         ${placeResult.name} 
           </strong><br>${placeResult.formatted_address}<br> Rating:   
-          ${rating} \u272e 
+          ${rating} \u272e <br>
+          Name:${reviewss[0].author_name}<br>
+          Review:
+          ${reviewss[0].text}
           </div>`);
         placeInfowindow.open(marker.map, marker);
         currentInfoWindow.close();
