@@ -166,17 +166,13 @@ const Main = () => {
           }
         } catch {
           console.error("error");
-        }
-        const reviewss = Array.from(placeResult.reviews)        
+        }            
         
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
         style="width:100%;max-width:300px;height:300px;"/><br><strong> 
         ${placeResult.name} 
           </strong><br>${placeResult.formatted_address}<br> Rating:   
-          ${rating} \u272e <br>
-          Name:${reviewss[0].author_name}<br>
-          Review:
-          ${reviewss[0].text}
+          ${rating} \u272e <br>         
           </div>`);
         placeInfowindow.open(marker.map, marker);
         currentInfoWindow.close();
