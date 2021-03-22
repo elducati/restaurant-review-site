@@ -206,6 +206,7 @@ const Main = () => {
     return <div></div>;
   };
   const locations = Array.from(responseData);
+  
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -243,16 +244,22 @@ const Main = () => {
                     {addRestFlag && <AddRest />}
                     {location && <FilterRestRating />}
                   </Context.Provider>
+                  <Card>
                   {locations &&
                     locations
                       .filter((place) => place.rating >= minRating)
                       .map((filteredPlace) => (
+                        <Card>
+                          <CardContent>
                         <Typography key={filteredPlace.place_id}>
                           {filteredPlace.name} <br />
                           Rating:
                           {filteredPlace.rating}
                         </Typography>
+                        </CardContent>
+                        </Card>
                       ))}
+                      </Card>
                 </CardContent>
               </Card>
             </Paper>

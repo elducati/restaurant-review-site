@@ -56,7 +56,7 @@ h1 {
   position: absolute;  
   display: flex;
   margin-left: 312px;
-  margin-top: 502px;
+  margin-top: 576px;
   background-color: lightgray;
   height: auto;
   width: auto;
@@ -181,4 +181,7 @@ button, input {
 .rating-text {
   font-size: 1.8rem;
   margin-right: 10px;
+}
+.MuiGrid-grid-xs-4{
+  height: 700px;
 }
