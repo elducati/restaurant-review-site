@@ -56,7 +56,7 @@ h1 {
   position: absolute;  
   display: flex;
   margin-left: 312px;
-  margin-top: 576px;
+  margin-top: 487px;
   background-color: lightgray;
   height: auto;
   width: auto;
@@ -174,9 +174,6 @@ button, input {
   background-color: #fff;
   padding: 2rem 3rem;
   border-radius: 10px;
-}
-.grid {
-  overflow: scroll;
 }
 .rating-text {
   font-size: 1.8rem;

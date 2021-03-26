@@ -26,7 +26,7 @@ let currentInfoWindow;
 const libraries = ["places"];
 //map's visible container layout size
 const mapContainerStyle = {
-  height: "100vh",
+  height: "70vh",
   width: "100vw",
 };
 //map options
@@ -156,14 +156,11 @@ const Main = () => {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
-        let firstPhoto = "None";
+        let firstPhoto = {restaurant};
         try {
           if (placeResult.photos[0]) {
             firstPhoto = placeResult.photos[0].getUrl();
-          }
-          else {
-            firstPhoto = { restaurant }
-          }
+          }          
         } catch {
           console.error("error");
         }            
@@ -171,7 +168,7 @@ const Main = () => {
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
         style="width:100%;max-width:300px;height:300px;"/><br><strong> 
         ${placeResult.name} 
-          </strong><br>${placeResult.formatted_address}<br> Rating:   
+          </strong><br>${placeResult.vicinity}<br> Rating:   
           ${rating} \u272e <br>         
           </div>`);
         placeInfowindow.open(marker.map, marker);
@@ -205,8 +202,7 @@ const Main = () => {
     }, [panTo]);
     return <div></div>;
   };
-  const locations = Array.from(responseData);
-  
+  const locations = Array.from(responseData); 
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -251,7 +247,7 @@ const Main = () => {
                       .map((filteredPlace) => (
                         <Card>
                           <CardContent>
-                        <Typography key={filteredPlace.place_id}>
+                        <Typography key={filteredPlace.place_id} >                                                                   
                           {filteredPlace.name} <br />
                           Rating:
                           {filteredPlace.rating}
