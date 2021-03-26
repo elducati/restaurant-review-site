@@ -180,5 +180,6 @@ button, input {
   margin-right: 10px;
 }
 .MuiGrid-grid-xs-4{
-  height: 700px;
+  height: 650px;
+  overflow: scroll;
 }
