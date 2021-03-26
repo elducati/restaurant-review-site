@@ -247,7 +247,8 @@ const Main = () => {
                       .map((filteredPlace) => (
                         <Card>
                           <CardContent>
-                        <Typography key={filteredPlace.place_id} >                                                                   
+                        <Typography key={filteredPlace.place_id} >
+                          <img src={filteredPlace.icon} alt="icon" /> <br/>                                                                
                           {filteredPlace.name} <br />
                           Rating:
                           {filteredPlace.rating}
