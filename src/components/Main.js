@@ -245,7 +245,7 @@ const Main = () => {
                     locations
                       .filter((place) => place.rating >= minRating)
                       .map((filteredPlace) => (
-                        <Card>
+                        <Card variant="outlined">
                           <CardContent>
                         <Typography key={filteredPlace.place_id} >
                           <img src={filteredPlace.icon} alt="icon" /> <br/>                                                                
