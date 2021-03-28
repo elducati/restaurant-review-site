@@ -59,8 +59,8 @@ const Main = () => {
   const [error, setError] = useState();
   const [lat, setLat] = useState(0)
   const [lng, setLng] = useState(0)
-  
-  
+
+
   //reset minimum rating declaration
   const resetMinRating = (newValue) => {
     setMinRating(newValue);
@@ -83,7 +83,7 @@ const Main = () => {
 
 
   const onMapClick = ((event, addRestFlag) => {
-    
+
     setAddRestFlag(!addRestFlag);
 
     let lat = event.latLng.lat()
@@ -156,21 +156,21 @@ const Main = () => {
         let placeInfowindow = new window.google.maps.InfoWindow();
         let rating = "None";
         if (placeResult.rating) rating = placeResult.rating;
-        let firstPhoto = {restaurant};
+        let firstPhoto = { restaurant };
         try {
           if (placeResult.photos[0]) {
             firstPhoto = placeResult.photos[0].getUrl();
-          }          
+          }
         } catch {
           //console.error("error");
           firstPhoto = restaurant
-        }            
-        
+        }
+
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
         style="width:100%;max-width:300px;height:300px;"/><br><strong> 
         ${placeResult.name} 
-          </strong><br>${placeResult.vicinity}<br> Rating:   
-          ${rating} \u272e <br>         
+          </strong><br>
+          Rating:${rating} \u272e <br>         
           </div>`);
         placeInfowindow.open(marker.map, marker);
         currentInfoWindow.close();
@@ -203,7 +203,7 @@ const Main = () => {
     }, [panTo]);
     return <div></div>;
   };
-  const locations = Array.from(responseData); 
+  const locations = Array.from(responseData);
   //load map
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -242,22 +242,22 @@ const Main = () => {
                     {location && <FilterRestRating />}
                   </Context.Provider>
                   <Card>
-                  {locations &&
-                    locations
-                      .filter((place) => place.rating >= minRating)
-                      .map((filteredPlace) => (
-                        <Card variant="outlined">
-                          <CardContent>
-                        <Typography key={filteredPlace.place_id} >
-                          <img src={filteredPlace.icon} alt="icon" /> <br/>                                                                
-                          {filteredPlace.name} <br />
+                    {locations &&
+                      locations
+                        .filter((place) => place.rating >= minRating)
+                        .map((filteredPlace) => (
+                          <Card variant="outlined">
+                            <CardContent>
+                              <Typography key={filteredPlace.place_id} >
+                                <img src={filteredPlace.icon} alt="icon" /> <br />
+                                {filteredPlace.name} <br />
                           Rating:
                           {filteredPlace.rating}
-                        </Typography>
-                        </CardContent>
-                        </Card>
-                      ))}
-                      </Card>
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        ))}
+                  </Card>
                 </CardContent>
               </Card>
             </Paper>
@@ -301,7 +301,7 @@ const Main = () => {
                           lat: selected.lat,
                           lng: selected.lng,
                         }}
-                        onCloseClick={()=>{
+                        onCloseClick={() => {
                           setSelected(null)
                         }}
                       >
