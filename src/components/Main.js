@@ -162,7 +162,8 @@ const Main = () => {
             firstPhoto = placeResult.photos[0].getUrl();
           }          
         } catch {
-          console.error("error");
+          //console.error("error");
+          firstPhoto = restaurant
         }            
         
         placeInfowindow.setContent(`<div><img src=${firstPhoto} 
