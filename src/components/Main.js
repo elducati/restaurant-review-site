@@ -12,15 +12,15 @@ import Search from "./Search";
 import NavBar from "./AppBar";
 import Grid from "@material-ui/core/Grid";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
-import Context from "../Context";
+import Context from "../contextApi/Context";
 import FilterRestRating from "./FilterRestRating";
 import AddRest from "./AddRest";
 import SideBar from "./SideBar";
-import * as restaurantsData from "../restaurants.json";
-import compass from "../compass.svg"
-import restaurant from "../restaurant.svg"
+import * as restaurantsData from "../data/restaurants.json";
+import compass from "../images/compass.svg"
+import restaurant from "../images/restaurant.svg"
 
-//initialize variables the map
+//initialize variables for the map
 let service;
 let currentInfoWindow;
 const libraries = ["places"];
@@ -48,7 +48,7 @@ const Main = () => {
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
-  //useState hook
+
   const [responseData, setResponseData] = useState({});
   const [minRating, setMinRating] = useState(1);
   const [location, setLocation] = React.useState({ lat: 0, lng: 0 });

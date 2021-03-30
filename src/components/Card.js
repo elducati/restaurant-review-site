@@ -4,7 +4,7 @@ import Rating from "@material-ui/lab/Rating";
 import Popup from "reactjs-popup";
 import axios from "axios";
 import IndividualReview from "./IndividualReview";
-import restaurant from "../restaurant.svg"
+import restaurant from "../images/restaurant.svg"
 import 'reactjs-popup/dist/index.css';
 
 //Add review and review render area

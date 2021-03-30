@@ -1,5 +1,5 @@
 import {useContext} from "react"
-import Context from "../Context"
+import Context from "../contextApi/Context"
 import StarRatings from "react-star-ratings"
 
 //filter restaurants by ratings
