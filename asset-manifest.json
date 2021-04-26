@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/restaurant-review-site/static/css/main.693a4162.chunk.css",
+    "main.js": "/restaurant-review-site/static/js/main.0ab67af1.chunk.js",
+    "main.js.map": "/restaurant-review-site/static/js/main.0ab67af1.chunk.js.map",
+    "runtime-main.js": "/restaurant-review-site/static/js/runtime-main.b7e98a20.js",
+    "runtime-main.js.map": "/restaurant-review-site/static/js/runtime-main.b7e98a20.js.map",
+    "static/css/2.05b36da4.chunk.css": "/restaurant-review-site/static/css/2.05b36da4.chunk.css",
+    "static/js/2.2b799e62.chunk.js": "/restaurant-review-site/static/js/2.2b799e62.chunk.js",
+    "static/js/2.2b799e62.chunk.js.map": "/restaurant-review-site/static/js/2.2b799e62.chunk.js.map",
+    "index.html": "/restaurant-review-site/index.html",
+    "static/css/2.05b36da4.chunk.css.map": "/restaurant-review-site/static/css/2.05b36da4.chunk.css.map",
+    "static/css/main.693a4162.chunk.css.map": "/restaurant-review-site/static/css/main.693a4162.chunk.css.map",
+    "static/js/2.2b799e62.chunk.js.LICENSE.txt": "/restaurant-review-site/static/js/2.2b799e62.chunk.js.LICENSE.txt",
+    "static/media/compass.6bde5180.svg": "/restaurant-review-site/static/media/compass.6bde5180.svg",
+    "static/media/restaurant.e5d8d4c0.svg": "/restaurant-review-site/static/media/restaurant.e5d8d4c0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b7e98a20.js",
+    "static/css/2.05b36da4.chunk.css",
+    "static/js/2.2b799e62.chunk.js",
+    "static/css/main.693a4162.chunk.css",
+    "static/js/main.0ab67af1.chunk.js"
+  ]
+}
