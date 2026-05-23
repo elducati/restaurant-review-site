@@ -1,0 +1,131 @@
+[
+  {
+    "id": "rest-1",
+    "name": "Hotel Fairmont The Norfolk",
+    "lat": -1.278375,
+    "lng": 36.816335,
+    "address": "Harry Thuku Rd, Nairobi",
+    "avgRating": 4.6,
+    "totalRatings": 2200,
+    "priceLevel": 3,
+    "phone": "+254 20 2265000",
+    "website": "https://www.fairmont.com/norfolk-hotel-nairobi",
+    "reviews": [
+      { "author": "Sarah M.", "rating": 5, "text": "Beautiful colonial hotel with impeccable service. The afternoon tea is a must.", "date": "2025-11-15" },
+      { "author": "James K.", "rating": 4, "text": "Great location and wonderful gardens. Rooms are a bit dated but very clean.", "date": "2025-09-22" },
+      { "author": "Amina W.", "rating": 5, "text": "Stayed here for a conference. Excellent facilities and staff.", "date": "2025-07-10" }
+    ]
+  },
+  {
+    "id": "rest-2",
+    "name": "Sentrim Hotels and Lodges",
+    "lat": -1.285572,
+    "lng": 36.820229,
+    "address": "Kenyatta Avenue, Nairobi",
+    "avgRating": 4.0,
+    "totalRatings": 1523,
+    "priceLevel": 2,
+    "phone": "+254 20 2212000",
+    "website": "https://www.sentrimhotels.com",
+    "reviews": [
+      { "author": "Peter O.", "rating": 4, "text": "Good value hotel in the city center. Breakfast buffet is solid.", "date": "2025-10-05" },
+      { "author": "Grace N.", "rating": 4, "text": "Convenient location for business trips. Rooms are comfortable.", "date": "2025-08-18" }
+    ]
+  },
+  {
+    "id": "rest-3",
+    "name": "Nairobi Serena Hotel",
+    "lat": -1.287030,
+    "lng": 36.814523,
+    "address": "Processional Way, Nairobi City",
+    "avgRating": 4.6,
+    "totalRatings": 2606,
+    "priceLevel": 4,
+    "phone": "+254 20 2842000",
+    "website": "https://www.serenahotels.com",
+    "reviews": [
+      { "author": "Michael T.", "rating": 5, "text": "Exceptional luxury hotel. The pool area is stunning and the service world-class.", "date": "2025-12-01" },
+      { "author": "Catherine L.", "rating": 5, "text": "Beautiful African-inspired decor throughout. The spa is incredible.", "date": "2025-10-20" },
+      { "author": "David R.", "rating": 4, "text": "Excellent conference facilities. Food quality is superb.", "date": "2025-06-15" }
+    ]
+  },
+  {
+    "id": "rest-4",
+    "name": "Carnivore Restaurant",
+    "lat": -1.332333,
+    "lng": 36.782514,
+    "address": "Langata Rd, Nairobi",
+    "avgRating": 4.3,
+    "totalRatings": 4850,
+    "priceLevel": 3,
+    "phone": "+254 20 6005923",
+    "website": "https://www.tamarind.co.ke/carnivore",
+    "reviews": [
+      { "author": "John D.", "rating": 5, "text": "Iconic nyama choma experience! The unlimited meat service is incredible.", "date": "2025-11-28" },
+      { "author": "Lucy W.", "rating": 4, "text": "Fun atmosphere and great for groups. The soups and desserts are excellent too.", "date": "2025-09-14" },
+      { "author": "Brian M.", "rating": 4, "text": "Touristy but worth it. The meat is well seasoned and service is attentive.", "date": "2025-04-22" }
+    ]
+  },
+  {
+    "id": "rest-5",
+    "name": "The Talisman Restaurant",
+    "lat": -1.332166,
+    "lng": 36.758694,
+    "address": "Ngong Rd, Nairobi",
+    "avgRating": 4.5,
+    "totalRatings": 890,
+    "priceLevel": 3,
+    "phone": "+254 20 577392",
+    "reviews": [
+      { "author": "Emma S.", "rating": 5, "text": "Lovely garden setting with fantastic international menu. The lamb is outstanding.", "date": "2025-10-12" },
+      { "author": "Tom O.", "rating": 4, "text": "Great brunch spot. Beautiful outdoor seating and creative cocktails.", "date": "2025-08-30" }
+    ]
+  },
+  {
+    "id": "rest-6",
+    "name": "Jiko Restaurant",
+    "lat": -1.233269,
+    "lng": 36.813219,
+    "address": "Tribe Hotel, Gigiri, Nairobi",
+    "avgRating": 4.7,
+    "totalRatings": 620,
+    "priceLevel": 4,
+    "phone": "+254 20 7200000",
+    "website": "https://www.tribehotel.com/dining",
+    "reviews": [
+      { "author": "Sophie A.", "rating": 5, "text": "Best fine dining in Nairobi. The tasting menu is a culinary journey.", "date": "2025-12-05" },
+      { "author": "Daniel K.", "rating": 4, "text": "Impeccable service and beautiful presentation. The wine list is excellent.", "date": "2025-09-19" }
+    ]
+  },
+  {
+    "id": "rest-7",
+    "name": "Tamarind Restaurant",
+    "lat": -1.269379,
+    "lng": 36.807602,
+    "address": "Nairobi",
+    "avgRating": 4.4,
+    "totalRatings": 1100,
+    "priceLevel": 3,
+    "phone": "+254 20 2514000",
+    "website": "https://www.tamarind.co.ke",
+    "reviews": [
+      { "author": "Rachel N.", "rating": 5, "text": "Fresh seafood with a beautiful view. The prawns are divine.", "date": "2025-11-10" },
+      { "author": "Kevin M.", "rating": 4, "text": "Great riverside dining. Excellent seafood platter and friendly staff.", "date": "2025-07-25" }
+    ]
+  },
+  {
+    "id": "rest-8",
+    "name": "About Thyme Restaurant",
+    "lat": -1.322437,
+    "lng": 36.760203,
+    "address": "Ngong Rd, Nairobi",
+    "avgRating": 4.3,
+    "totalRatings": 750,
+    "priceLevel": 2,
+    "phone": "+254 20 2022221",
+    "reviews": [
+      { "author": "Nancy W.", "rating": 4, "text": "Cozy spot with great European cuisine. The mushroom risotto is amazing.", "date": "2025-10-08" },
+      { "author": "George P.", "rating": 4, "text": "Consistently good food and friendly service. The patio is lovely.", "date": "2025-08-15" }
+    ]
+  }
+]

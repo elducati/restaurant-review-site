@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Reviews — Nairobi</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍽️%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="app-header">
+      <h1 id="app-title">Restaurant Reviews</h1>
+      <button id="sidebar-toggle" aria-label="Toggle restaurant list" class="mobile-only">&equiv;</button>
+      <button id="locate-btn" class="btn-icon" aria-label="Find my location">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v4m0 12v4m10-10h-4M6 12H2"/>
+        </svg>
+        <span class="btn-label">My Location</span>
+      </button>
+    </header>
+
+    <main id="app-main">
+      <aside id="sidebar" class="sidebar" aria-label="Restaurant list">
+        <div id="sidebar-header">
+          <h2 id="sidebar-title">Restaurants</h2>
+          <div id="filter-bar" role="group" aria-label="Filter by minimum rating">
+            <span id="filter-label">Min rating:</span>
+            <div id="star-filter" role="radiogroup" aria-labelledby="filter-label"></div>
+            <span id="filter-value">1</span>
+          </div>
+        </div>
+        <div id="restaurant-count" role="status" aria-live="polite"></div>
+        <div id="restaurant-list" role="list" aria-label="Restaurants"></div>
+        <div id="sidebar-footer">
+          <p class="hint" id="add-rest-hint">Click on the map to add a restaurant</p>
+        </div>
+      </aside>
+      <div id="sidebar-backdrop" class="sidebar-backdrop hidden" aria-hidden="true"></div>
+
+      <section id="map-section" aria-label="Map">
+        <div id="map" role="application" aria-label="Restaurant map"></div>
+        <div id="map-loading" class="loading-overlay" role="status" aria-live="polite">
+          <span>Loading Google Maps...</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Review Panel -->
+  <div id="review-panel" class="panel-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+    <div class="panel-backdrop" tabindex="-1"></div>
+    <div class="panel-container">
+      <div class="panel-header">
+        <h2 id="panel-title">Restaurant Details</h2>
+        <button class="panel-close btn-icon" aria-label="Close review panel">&times;</button>
+      </div>
+      <div class="panel-body" id="panel-body">
+        <div id="panel-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Restaurant Modal -->
+  <div id="add-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" tabindex="-1"></div>
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Restaurant</h2>
+        <button class="modal-close btn-icon" aria-label="Cancel">&times;</button>
+      </div>
+      <form id="add-form" novalidate>
+        <div class="form-group">
+          <label for="rest-name">Restaurant name</label>
+          <input type="text" id="rest-name" placeholder="e.g. Mama Sam's Kitchen" required aria-required="true" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label for="rest-rating">Rating</label>
+          <div id="rest-rating" class="interactive-stars" role="radiogroup" aria-label="Rating"></div>
+        </div>
+        <div class="form-group">
+          <label for="rest-address">Address</label>
+          <input type="text" id="rest-address" placeholder="Optional" autocomplete="off">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="add-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="add-submit-btn">Add Restaurant</button>
+        </div>
+        <p id="add-error" class="error-message hidden" role="alert"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div id="notification" class="notification hidden" role="status" aria-live="polite"></div>
+
+  <!-- config.js — set your API key (copy config.example.js) -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

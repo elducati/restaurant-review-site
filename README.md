@@ -1,45 +1,79 @@
+# Restaurant Reviews — Nairobi
 
-# Launch your own restaurant review site
-You've chosen to get started in the restaurant review business! Your goal is to create an easy-to-use, simple service that offers reviews of restaurants around you.
+A browser-based restaurant review platform built with vanilla JavaScript and the Google Maps JavaScript API.
 
-For this project, you have to learn to use external APIs such as Google Maps and Google Places (your biggest competitor 😬). That's not all: you will have to integrate all this information in a clear, organized way in your application!
+## Features
 
-You will also be required to code using good coding practices like you've learned so far, among which object-oriented programming is one of the most important.
+- Interactive Google Map with restaurant markers
+- Sidebar list with star ratings and real-time filtering
+- Google Places API integration to discover nearby restaurants
+- Street View panoramas for restaurant locations
+- Add restaurants (click on the map) and write reviews (in-memory)
+- Responsive design (desktop + mobile)
+- Keyboard accessible
 
-## Step 1: Restaurants
-Start with the real foundation of your application. There will be 2 main sections:
+## Setup
 
-A Google Maps map loaded with the Google Maps API
+### 1. Get a Google Maps API Key
 
-A list of restaurants on the right side of the page that are within the area displayed on the map
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create a new project (or select existing)
+3. Enable these APIs:
+   - Maps JavaScript API
+   - Places API
+   - Street View Static API
+4. Create an API key and restrict it by HTTP referrer to your domain
 
-The Google Maps map will focus immediately on the position of the user. You'll use the JavaScript geolocation API. A specific color marker should be shown at the user's current location.
+### 2. Configure the API Key
 
-A list of restaurants is provided as JSON data in a separate file. Normally, this data would be returned to the backend of your application by an API, but for this exercise, it's sufficient just to load the list of restaurants directly into memory!
+```bash
+cp config.example.js config.js
+```
 
-Show restaurants on the map based on their GPS coordinates. Restaurants that are currently visible on the map should be displayed in list form on the side of the map as mentioned above. You will see the average reviews of each restaurant (ranging from 1 to 5 stars). These ratings come from your JSON file (not real reviews).
+Open `config.js` and replace `YOUR_API_KEY_HERE` with your actual API key.
 
-When you click on a restaurant, the list of reviews should be shown. Also show the Google Street View photo via the corresponding API! 
+**Never commit `config.js`** — it's in `.gitignore`.
 
-A filter tool allows the display of restaurants that have between X and Y stars. The map should be updated in real-time to show the corresponding restaurants.
+### 3. Run
 
-## Step 2: Add restaurants and reviews
-Your visitors would also like to give their opinions on restaurants!
+Serve the directory with any HTTP server (required for `fetch()` and the Google Maps API):
 
-Let them:
+```bash
+# Using Python
+python -m http.server 8080
 
-Add a review about an existing restaurant
+# Using Node
+npx serve .
 
-Add a restaurant by clicking on a specific place on the map
+# Using VS Code
+# Install "Live Server" extension → right-click index.html → Open with Live Server
+```
 
-Once a review or restaurant has been added, it should appear immediately on the map. A new marker will show the position of the new restaurant.
+Then open `http://localhost:8080` in a browser.
 
-The information will not be saved if they leave the page (it will just be saved in memory for the duration of the visit).
+## Usage
 
-## Step 3: Integration with Google Places API
-For the moment, there are not many restaurants or reviews. Fortunately, Google Places offers an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. Here's their documentation: https://developers.google.com/places/web-service/details
+- **Browse** restaurants in the sidebar or on the map
+- **Filter** by minimum star rating using the stars in the sidebar header
+- **View details** — click a restaurant card to open the review panel with Street View
+- **Add a review** — in the review panel, fill out the form and submit
+- **Add a restaurant** — click anywhere on the map, fill in the name and rating
+- **Locate me** — click the crosshair button in the header to re-center on your position
+- **Nearby results** — pan the map to discover restaurants from Google Places
 
-You'll use the search API to find restaurants in a particular display area.
+## Project Structure
 
-Read the documentation to learn how to access data from Google Places, and feel free to search around on Google for tips if you get a little stuck!
+```
+├── index.html            Main HTML
+├── style.css             All styles (responsive, custom properties)
+├── app.js                Application logic (IIFE pattern)
+├── restaurants.json      Seed data (8 Nairobi restaurants)
+├── config.example.js     API key template → copy to config.js
+├── .env.example          Environment variable reference
+├── .gitignore
+└── README.md
+```
 
+## Data
+
+All user data (reviews, added restaurants) is stored in memory only and will be lost on page refresh. The `restaurants.json` file provides seed data. Google Places API results are cached during the session.
